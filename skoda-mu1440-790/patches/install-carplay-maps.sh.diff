@@ -1,0 +1,70 @@
+--- a/Custom/carplay_maps_vc/payload/common/install-carplay-maps.sh	2026-10-19 16:44:54.000000000 +0300
++++ b/Custom/carplay_maps_vc/payload/common/install-carplay-maps.sh	2026-10-27 17:37:08.757932713 +0300
+@@ -64,7 +64,13 @@
+     fail "MU1440_REQUIRES_790"
+ fi
+ 
+-CORE="$PAYLOAD/profiles/$EXPECTED_MU/$INSTRUMENT/core.so"
++PROFILE_DIR="$PAYLOAD/profiles/$EXPECTED_MU/$INSTRUMENT"
++CORE="$PROFILE_DIR/core.so"
++# Local build (D.): optional variant name shown in the status screen.
++if [ -s "$PROFILE_DIR/VARIANT" ]; then
++    read CPMAP_VARIANT < "$PROFILE_DIR/VARIANT"
++    VERSION="$VERSION+$CPMAP_VARIANT"
++fi
+ WRAPPER="$PAYLOAD/common/dio_manager.wrapper.sh"
+ CONTROL_JAR="$PAYLOAD/common/CarPlayClusterControls.jar"
+ if [ "$EXPECTED_MU" = "MU1440" ] && [ -s "$PAYLOAD/profiles/MU1440/790/CarPlayClusterControls.jar" ]; then
+@@ -298,9 +304,29 @@
+ cp "$WRAPPER" "$NEW/dio_manager.wrapper.sh" || fail "WRAPPER_COPY_FAILED"
+ cp "$BRIDGE" "$NEW/altscreen-most-bridge" || fail "BRIDGE_COPY_FAILED"
+ cp "$SUPERVISOR" "$NEW/carplay-cluster-supervisor" || fail "SUPERVISOR_COPY_FAILED"
++# Local build (D.): RAM-disk logs are OFF by default. The supervisor variant
++# writes the MOST bridge log to /dev/null (mathsls patch at 0x47c0) and the
++# NO_RAM_LOGS flag makes the dio_manager wrapper send the video and session logs
++# to /dev/null. The variant menu can switch them back on.
++if [ -s "$PAYLOAD/common/carplay-cluster-supervisor.nolog" ]; then
++    cp "$PAYLOAD/common/carplay-cluster-supervisor.nolog" "$NEW/carplay-cluster-supervisor" || fail "SUPERVISOR_NOLOG_COPY_FAILED"
++    echo off > "$NEW/NO_RAM_LOGS" || fail "RAM_LOG_FLAG_FAILED"
++    chmod 644 "$NEW/NO_RAM_LOGS"
++    echo "CPMAP_RAM_LOGS=OFF"
++fi
+ cp "$SEC" "$NEW/libcarplay-security-bridge.so" || fail "SESSION_BRIDGE_COPY_FAILED"
+ cp "$PAIR_HELPER" "$NEW/security_bridge/carplay-pairing-helper" || fail "PAIR_HELPER_COPY_FAILED"
+ cp "$PAIR_CORE" "$NEW/security_bridge/libCarPlayPairingCore.so" || fail "PAIR_CORE_COPY_FAILED"
++# Optional cluster shim (from mathsls fork, GPL-3.0): announces the cluster
++# display as "Instrument Cluster" and can set the turn-card style.
++if [ -s "$PROFILE_DIR/libcardshim.so" ]; then
++    cp "$PROFILE_DIR/libcardshim.so" "$NEW/libcardshim.so" || fail "CARDSHIM_COPY_FAILED"
++    chmod 644 "$NEW/libcardshim.so"
++fi
++if [ -s "$PROFILE_DIR/CLUSTER_ZOOM" ]; then
++    cp "$PROFILE_DIR/CLUSTER_ZOOM" "$NEW/CLUSTER_ZOOM" || fail "CLUSTER_ZOOM_COPY_FAILED"
++    chmod 644 "$NEW/CLUSTER_ZOOM"
++fi
+ echo "$VERSION" > "$NEW/VERSION"
+ echo "$DETECTED_MU/$INSTRUMENT" > "$NEW/PROFILE"
+ touch "$NEW/CLUSTER_AUTO_ENABLE"
+@@ -367,6 +393,22 @@
+ fi
+ rm -rf "$OLD" "$STAGE" 2>/dev/null
+ 
++# Local build (D.): install the MU1440/790 variant-switch menu if it is
++# on the SD card. Never fails the installation. Scripts of older builds of
++# this menu are removed first so no stale buttons/scripts stay behind.
++MENU_SRC="$PAYLOAD/../menu790"
++ENGDEFS="$APP/eso/hmi/engdefs"
++if [ -s "$MENU_SRC/cpmap-790-variants.esd" ] && [ -d "$ENGDEFS/scripts/mqb" ]; then
++    rm -f "$ENGDEFS/scripts/mqb/"cpmap_variant*.sh 2>/dev/null
++    if cp "$MENU_SRC/cpmap-790-variants.esd" "$ENGDEFS/cpmap-790-variants.esd" 2>/dev/null &&
++       cp "$MENU_SRC/"cpmap_variant*.sh "$ENGDEFS/scripts/mqb/" 2>/dev/null; then
++        chmod 755 "$ENGDEFS/scripts/mqb/"cpmap_variant*.sh 2>/dev/null
++        echo "CPMAP_VARIANT_MENU=INSTALLED"
++    else
++        echo "CPMAP_VARIANT_MENU=COPY_FAILED (main install is OK)"
++    fi
++fi
++
+ sync 2>/dev/null || true
+ echo "CPMAP_PROFILE=$DETECTED_MU/$INSTRUMENT"
+ echo "CPMAP_PLAINTEXT_ROOT=/mnt/app/carplaymaps"
