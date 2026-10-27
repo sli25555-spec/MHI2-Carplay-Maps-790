@@ -29,6 +29,12 @@ Columbus MHI2 (MU1440) · приборка 790 (AID 10,25") · на основе
   Советую оформить их так (GitHub подставит ссылки сам после перетаскивания):
   <p align="center"><img src="ССЫЛКА_1" width="49%"> <img src="ССЫЛКА_2" width="49%"></p>
 -->
+<img width="1629" height="611" alt="photo_2026-10-27 23 07 30" src="https://github.com/user-attachments/assets/e5c7b4e3-96d7-43c1-9a33-410941e217a1" />
+<img width="2118" height="779" alt="photo_2026-10-27 23 07 29" src="https://github.com/user-attachments/assets/b1311e19-be83-4677-89f0-0846fcefa311" />
+<img width="1672" height="624" alt="photo_2026-10-27 23 07 26" src="https://github.com/user-attachments/assets/4c45c9ab-0011-40ae-9d48-4b263fc62fdf" />
+<img width="1867" height="687" alt="photo_2026-10-27 23 07 25" src="https://github.com/user-attachments/assets/0fec5886-474c-4739-8ff3-4e0f8ef41d07" />
+<img width="2032" height="783" alt="photo_2026-10-27 23 07 20" src="https://github.com/user-attachments/assets/8de28b46-e210-48e3-91e1-9cd0cc2adc01" />
+<img width="2148" height="717" alt="photo_2026-10-27 23 07 23" src="https://github.com/user-attachments/assets/f2b5dab9-9fb6-4651-af20-cd2b33df43a2" />
 
 ---
 
