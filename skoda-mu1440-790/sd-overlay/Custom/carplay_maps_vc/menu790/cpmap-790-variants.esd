@@ -1,0 +1,64 @@
+###########################################################################
+# MHI2-Carplay-Maps 790 v1 - MU1440/790 variants (by D., based on omonob 1.2.2)
+# Swaps core.so / libcardshim / card style only. Full reboot after any switch.
+###########################################################################
+screen cpmap-790-variants carplay-maps-vc
+
+keyValue
+    value   String sys 0x00000000 0
+    label   "MHI2-Carplay-Maps 790 v1. Keep the SD card inserted. Reboot after switching."
+    poll    0
+
+script
+    value   sys 1 0x0100 "/eso/hmi/engdefs/scripts/mqb/cpmap_variant_OMONOB.sh"
+    label   "OMONOB 1.2.2 classic (40 fps, no card)"
+
+script
+    value   sys 1 0x0100 "/eso/hmi/engdefs/scripts/mqb/cpmap_variant_YANDEX11.sh"
+    label   "YANDEX11: card + ETA, zone 30-808 / 41-333 (default)"
+
+script
+    value   sys 1 0x0100 "/eso/hmi/engdefs/scripts/mqb/cpmap_variant_YANDEX22.sh"
+    label   "YANDEX22: card + ETA, zone 65-808 / 41-333"
+
+script
+    value   sys 1 0x0100 "/eso/hmi/engdefs/scripts/mqb/cpmap_variant_YANDEX33.sh"
+    label   "YANDEX33: card + ETA, zone 100-850 / 41-333"
+
+script
+    value   sys 1 0x0100 "/eso/hmi/engdefs/scripts/mqb/cpmap_variant_YANDEX44.sh"
+    label   "YANDEX44: card + ETA, zone 20-838 / 41-333"
+
+script
+    value   sys 1 0x0100 "/eso/hmi/engdefs/scripts/mqb/cpmap_variant_YANDEX55.sh"
+    label   "YANDEX55: card on top, zone 100-810 / 41-333"
+
+script
+    value   sys 1 0x0100 "/eso/hmi/engdefs/scripts/mqb/cpmap_variant_GOOGLE11.sh"
+    label   "GOOGLE11: card + ETA, zone 65-808 / 41-351"
+
+script
+    value   sys 1 0x0100 "/eso/hmi/engdefs/scripts/mqb/cpmap_variant_GOOGLE22.sh"
+    label   "GOOGLE22: card + ETA, zone 45-795 / 41-351"
+
+keyValue
+    value   String sys 0x00000000 0
+    label   "All variants except OMONOB: 30 fps."
+    poll    0
+
+keyValue
+    value   String sys 0x00000000 0
+    label   "RAM logs (any variant; OFF after Install 790; reboot after switching):"
+    poll    0
+
+script
+    value   sys 1 0x0100 "/eso/hmi/engdefs/scripts/mqb/cpmap_variant_ramlogs_off.sh"
+    label   "RAM logs: OFF (default)"
+
+script
+    value   sys 1 0x0100 "/eso/hmi/engdefs/scripts/mqb/cpmap_variant_ramlogs_on.sh"
+    label   "RAM logs: ON (for diagnostics)"
+
+script
+    value   sys 1 0x0100 "/eso/hmi/engdefs/scripts/mqb/cpmap_variant_show.sh"
+    label   "Show active variant, RAM logs and RAM disk usage"
