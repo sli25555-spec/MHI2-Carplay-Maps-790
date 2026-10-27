@@ -52,7 +52,7 @@ SHA-256 архива:
 ### Исправлено
 - RAM-диск больше не переполняется логами мода при долгой езде (по умолчанию логи идут в `/dev/null`).
 
-Проверено на: Škoda Octavia A7 / `MHI2_ER_SKG13_P4526_1` / MU1440 / `5E0 920 790 A` / iPhone по кабелю, iOS 27 / Яндекс, Google Maps, Amap.
+Проверено на: Škoda Octavia A7 / `MHI2_ER_SKG13_P4526_1` / MU1440 / `5E0 920 790 A` / iPhone по кабелю, iOS 27 / Яндекс Навигатор, Google Maps, Amap, Apple Карты.
 SHA-256 архива `MHI2-Carplay-Maps-790-v1.zip`: `fd7b84acbc963e7d21a714ad322481835381ec208d594e838fde8e690657e34b`
 
 [Не выпущено]: https://github.com/sli25555-spec/MHI2-Carplay-Maps-790/compare/790-v1...HEAD

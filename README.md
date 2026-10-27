@@ -38,35 +38,46 @@ Columbus MHI2 (MU1440) · приборка 790 (AID 10,25") · на основе
 - 🧭 **карточку манёвра** (стрелка, метры, улица);
 - 🕒 **время до цели**.
 
-Работает с Яндекс Навигатором, Google Maps и Amap.
+Протестировано на Яндекс Навигаторе, Google Maps, Amap и Apple Картах.
 
 | | |
 |---|---|
 | 🗺️ **Карточка манёвра и время прибытия** | рисует сам iPhone, прямо в карте на приборке |
-| 🎯 **Зоны под Яндекс и Google** | курсор выше и ближе к центру, карточка у края |
+| 🎯 **Зоны под Яндекс, Google и Apple** | курсор выше и ближе к центру, карточка у края |
 | 🔀 **8 вариантов в меню** | переключаются из MQB Toolbox без переустановки |
-| ⚡ **30 кадров/с** | во всех вариантах, кроме оригинального |
 | 🧹 **RAM-логи выключены** | RAM-диск магнитолы (20 МБ) не переполняется при долгой езде |
 | ↩️ **Полный откат** | Restore factory files возвращает заводские файлы |
 
 ### ⚡ Быстрая установка
 
-1. Сделайте бэкап: MQB Toolbox → **Dump**.
-2. Скачайте `MHI2-Carplay-Maps-790-v1.zip` из [Releases](https://github.com/sli25555-spec/MHI2-Carplay-Maps-790/releases/latest) и распакуйте **в корень** SD-карты (FAT32).
-3. MQB Toolbox → mqbcoding → Customization → CarPlay Maps VC → **Install 790 AID 10.5**.
-4. Дождитесь `CPMAP_INSTALL_OK` и сделайте **полную перезагрузку** магнитолы (держать кнопку питания ~10 с).
+1. Скачайте `MHI2-Carplay-Maps-790-v1.zip` из [Releases](https://github.com/sli25555-spec/MHI2-Carplay-Maps-790/releases/latest) и распакуйте **в корень** SD-карты (FAT32).
+2. MQB Toolbox → mqbcoding → Customization → CarPlay Maps VC → **Install 790 AID 10.5**.
+3. Дождитесь `CPMAP_INSTALL_OK` и сделайте **полную перезагрузку** магнитолы (держать кнопку питания ~10 с).
 
-После установки стоит вариант **YANDEX11**, RAM-логи выключены.
+После установки включён вариант **YANDEX11** (под Яндекс Навигатор).
+**Пользуетесь Google Maps или не устраивает положение курсора — переключите вариант:**
+MQB Toolbox → mqbcoding → Customization → CarPlay Maps VC → **cpmap-790-variants** → кнопка нужного варианта → дождаться `CPMAP_VARIANT_OK` → полная перезагрузка.
+Какой вариант что делает — в разделе [«Как переключать варианты: схемы зон»](#variants) ниже.
 
 > [!WARNING]
 > Изменение файлов магнитолы может привести к сбоям загрузки. Всё на свой риск: на стоящей машине, при стабильном питании, с бэкапом. Проверено только на конфигурации из раздела «Совместимость».
 
+<a id="variants"></a>
 <details>
-<summary><b>🔀 Варианты: схемы зон</b></summary>
+<summary><b>🔀 Как переключать варианты: схемы зон</b></summary>
 
 <br>
 
-Меню: CarPlay Maps VC → **cpmap-790-variants**. Для переключения SD-карта должна быть в магнитоле, после переключения нужна полная перезагрузка.
+> [!IMPORTANT]
+> **При установке ставится YANDEX11. Если вы пользователь Google Maps — выберите свой вариант ниже: GOOGLE11 или GOOGLE22!**
+
+**Как переключить:**
+1. Вставьте SD-карту с этой сборкой в магнитолу. Она нужна для переключения.
+2. MQB Toolbox → mqbcoding → Customization → CarPlay Maps VC → **cpmap-790-variants**.
+3. Нажмите кнопку нужного варианта и дождитесь `CPMAP_VARIANT_OK`.
+4. Сделайте полную перезагрузку магнитолы (держать кнопку питания ~10 с).
+
+Кнопка **Show** в том же меню показывает, какой вариант сейчас стоит.
 
 **Зона** — область видео приборки (1010×376), внутри которой навигатор ставит курсор, карточку и время прибытия. Карта при этом всегда на весь экран.
 - карточка висит от левого верхнего угла зоны;
@@ -75,16 +86,16 @@ Columbus MHI2 (MU1440) · приборка 790 (AID 10,25") · на основе
 
 Тёмные области на схемах — рамки приборки (часы, «P», скорость, пробег). Положение карточки, курсора и рамок приблизительное, по фото.
 
-| Кнопка | Зона X | Зона Y | FPS | Карточка | Время прибытия |
-|---|---|---|---|---|---|
-| OMONOB 1.2.2 classic | 202–808 | 16–360 | 40 | нет | нет |
-| **YANDEX11** (по умолчанию) | 30–808 | 41–333 | 30 | слева сверху | да |
-| YANDEX22 | 65–808 | 41–333 | 30 | слева сверху | да |
-| YANDEX33 | 100–850 | 41–333 | 30 | слева сверху | да |
-| YANDEX44 | 20–838 | 41–333 | 30 | слева сверху | да |
-| YANDEX55 | 100–810 | 41–333 | 30 | сверху полосой | нет |
-| GOOGLE11 | 65–808 | 41–351 | 30 | слева сверху | да |
-| GOOGLE22 | 45–795 | 41–351 | 30 | слева сверху | да |
+| Вариант | Зона X | Зона Y | Карточка | Время прибытия |
+|---|---|---|---|---|
+| **YANDEX11** (по умолчанию) — всё ± по центру | 30–808 | 41–333 | слева сверху | да |
+| **YANDEX22** — всё чуть сдвинуто вправо | 65–808 | 41–333 | слева сверху | да |
+| **YANDEX33** — стрелка по центру только без маршрута | 100–850 | 41–333 | слева сверху | да |
+| **YANDEX44** — стрелка точно по центру только при ведении по маршруту | 20–838 | 41–333 | слева сверху | да |
+| **YANDEX55** — подсказки сверху, стрелка всегда по центру | 100–810 | 41–333 | сверху полосой | нет |
+| **GOOGLE11** — всё ± по центру | 65–808 | 41–351 | слева сверху | да |
+| **GOOGLE22** — стрелка точно по центру только при ведении по маршруту | 45–795 | 41–351 | слева сверху | да |
+| **OMONOB 1.2.2 classic** — оригинал omonob, только карта | 202–808 | 16–360 | нет | нет |
 
 <p>
 <img src="skoda-mu1440-790/docs/zones/YANDEX11.svg" width="49%" alt="YANDEX11">
@@ -125,7 +136,7 @@ Columbus MHI2 (MU1440) · приборка 790 (AID 10,25") · на основе
 | Google Maps | ✅ | ✅ | ✅ | ✅ |
 | Amap | ✅ | ✅ | ✅ | ✅ |
 | 2ГИС | ✅ | не проверялось | не проверялось | ❌ |
-| Apple Карты | не проверялось | не проверялось | не проверялось | не проверялось |
+| Apple Карты | ✅ | ✅ | ✅ | не проверялось |
 
 **Не проверялось:** другие машины и прошивки, приборка 791 (12,3"), беспроводные CarPlay-адаптеры (по опыту других проектов картинка на приборку через них не идёт).
 
@@ -249,17 +260,17 @@ LICENSE                    GPL-3.0 (как у оригинала)
 **What it is.** An unofficial build of omonob's [CarPlay Maps VC](https://github.com/omonob/MHI2-Carplay-Maps) v1.2.2 for **Škoda Columbus MHI2 (MU1440) with the 790 virtual cockpit (AID 10.25")**.
 
 **What it adds to the original:**
-- a turn card and an arrival-time bar on the cluster (Yandex, Google Maps, Amap);
+- a turn card and an arrival-time bar on the cluster (tested with Yandex Navigator, Google Maps, Amap and Apple Maps);
 - safe areas tuned for Yandex and Google;
 - 8 variants you can switch from MQB Toolbox;
-- 30 fps;
 - RAM-disk logs off by default.
 
 **Install:**
-1. Back up the unit.
-2. Extract `MHI2-Carplay-Maps-790-v1.zip` from [Releases](https://github.com/sli25555-spec/MHI2-Carplay-Maps-790/releases/latest) to the SD-card root.
-3. MQB Toolbox → mqbcoding → Customization → CarPlay Maps VC → **Install 790 AID 10.5**.
-4. Wait for `CPMAP_INSTALL_OK`, then do a full reboot (hold the power button for about 10 s).
+1. Extract `MHI2-Carplay-Maps-790-v1.zip` from [Releases](https://github.com/sli25555-spec/MHI2-Carplay-Maps-790/releases/latest) to the SD-card root.
+2. MQB Toolbox → mqbcoding → Customization → CarPlay Maps VC → **Install 790 AID 10.5**.
+3. Wait for `CPMAP_INSTALL_OK`, then do a full reboot (hold the power button for about 10 s).
+
+The default is YANDEX11. **Google Maps users:** switch to GOOGLE11 or GOOGLE22 in CarPlay Maps VC → cpmap-790-variants, then do a full reboot.
 
 Default variant: YANDEX11, RAM logs off. To undo, use **Restore factory files**.
 
