@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="606.0" height="259.6" viewBox="0 -34 606.0 259.6" style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+<rect x="0" y="-34" width="606.0" height="259.6" rx="10" fill="#0d1117"/>
+<text x="10" y="-12" font-size="14" font-weight="600" fill="#e6edf3">YANDEX44 — зона X 20–838, Y 41–333, 30 fps</text>
+<rect x="0.0" y="0.0" width="606.0" height="225.6" fill="#1f3b2d"/>
+<line x1="0.0" y1="0" x2="108.0" y2="225.6" stroke="#2c5a43" stroke-width="2"/>
+<line x1="36.0" y1="0" x2="144.0" y2="225.6" stroke="#2c5a43" stroke-width="2"/>
+<line x1="72.0" y1="0" x2="180.0" y2="225.6" stroke="#2c5a43" stroke-width="2"/>
+<line x1="108.0" y1="0" x2="216.0" y2="225.6" stroke="#2c5a43" stroke-width="2"/>
+<line x1="144.0" y1="0" x2="252.0" y2="225.6" stroke="#2c5a43" stroke-width="2"/>
+<line x1="180.0" y1="0" x2="288.0" y2="225.6" stroke="#2c5a43" stroke-width="2"/>
+<line x1="216.0" y1="0" x2="324.0" y2="225.6" stroke="#2c5a43" stroke-width="2"/>
+<line x1="252.0" y1="0" x2="360.0" y2="225.6" stroke="#2c5a43" stroke-width="2"/>
+<line x1="288.0" y1="0" x2="396.0" y2="225.6" stroke="#2c5a43" stroke-width="2"/>
+<line x1="324.0" y1="0" x2="432.0" y2="225.6" stroke="#2c5a43" stroke-width="2"/>
+<line x1="360.0" y1="0" x2="468.0" y2="225.6" stroke="#2c5a43" stroke-width="2"/>
+<line x1="396.0" y1="0" x2="504.0" y2="225.6" stroke="#2c5a43" stroke-width="2"/>
+<line x1="432.0" y1="0" x2="540.0" y2="225.6" stroke="#2c5a43" stroke-width="2"/>
+<line x1="468.0" y1="0" x2="576.0" y2="225.6" stroke="#2c5a43" stroke-width="2"/>
+<line x1="504.0" y1="0" x2="612.0" y2="225.6" stroke="#2c5a43" stroke-width="2"/>
+<line x1="540.0" y1="0" x2="648.0" y2="225.6" stroke="#2c5a43" stroke-width="2"/>
+<line x1="576.0" y1="0" x2="684.0" y2="225.6" stroke="#2c5a43" stroke-width="2"/>
+<line x1="0" y1="150.0" x2="606.0" y2="120.0" stroke="#3d6b54" stroke-width="5"/>
+<rect x="12.0" y="24.6" width="490.8" height="175.2" fill="#58a6ff" fill-opacity="0.10" stroke="#58a6ff" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="499.2" y="34.2" font-size="10" fill="#58a6ff" text-anchor="end">зона</text>
+<rect x="19.2" y="30.6" width="192.0" height="102.0" rx="12" fill="#1f6feb" fill-opacity="0.85"/>
+<text x="115.2" y="84.0" font-size="12" fill="#fff" text-anchor="middle" font-weight="600">↰ 40 м · улица</text>
+<rect x="19.2" y="162.6" width="150.0" height="30.0" rx="12" fill="#161b22" fill-opacity="0.95" stroke="#8b949e" stroke-width="1"/>
+<text x="94.2" y="180.6" font-size="11" fill="#e6edf3" text-anchor="middle">У цели 12 мин</text>
+<polygon points="257.4,152.4 270.6,184.8 257.4,177.6 244.2,184.8" fill="#f2c94c" stroke="#b8860b" stroke-width="1"/>
+<text x="275.4" y="180.0" font-size="10" fill="#f2c94c">курсор</text>
+<polygon points="0.0,0.0 606.0,0.0 606.0,18.0 354.0,18.0 339.0,27.6 267.0,27.6 252.0,18.0 0.0,18.0" fill="#05070a" fill-opacity="0.78"/>
+<polygon points="0.0,160.8 120.0,160.8 150.0,207.0 0.0,207.0" fill="#05070a" fill-opacity="0.78"/>
+<polygon points="606.0,160.8 486.0,160.8 456.0,207.0 606.0,207.0" fill="#05070a" fill-opacity="0.78"/>
+<rect x="0.0" y="207.0" width="606.0" height="18.6" fill="#05070a" fill-opacity="0.78"/>
+<text x="303.0" y="13.2" font-size="11" fill="#8b949e" text-anchor="middle">12:00 · компас · °C</text>
+<text x="36.0" y="192.0" font-size="22" fill="#8b949e" font-weight="600">P</text>
+<text x="558.0" y="192.0" font-size="22" fill="#8b949e" font-weight="600">0</text>
+<text x="303.0" y="219.6" font-size="10" fill="#8b949e" text-anchor="middle">пробег · значки</text>
+<rect x="12.0" y="24.6" width="490.8" height="175.2" fill="none" stroke="#58a6ff" stroke-width="2" stroke-dasharray="6 4" stroke-opacity="0.9"/>
+</svg>
