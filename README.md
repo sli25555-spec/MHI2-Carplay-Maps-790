@@ -39,6 +39,23 @@ Columbus MHI2 (MU1440) · 790 cluster (AID 10.25") · based on [omonob/MHI2-Carp
 ### 🧭 Turn card — arrow, metres, street
 ### 🕒 Arrival time under the card
 
+## Changes since v1
+
+- **New base: omonob 2.0.1** (was 1.2.2). Adds the Virtual Cockpit settings page in App-Connect; card position Left / Right / Center / Off with automatic zone switching when route guidance starts or ends; Mirroring; capped log size and release of the video buffer.
+- **Two variants instead of eight:**
+  - **YANDEX-2026** (installed by default) — zones for Yandex Maps, Yandex Navigator and Yango Maps, tuned in the car; arrival time with the Left and Right card; 30 fps.
+  - **OMONOB 2.0.1 classic** — omonob's original, unchanged.
+- **Switching to the original omonob** is done on the head unit, without reinstalling:
+  1. Insert the SD card with this build.
+  2. MQB Toolbox → mqbcoding → Customization → CarPlay Maps VC → **cpmap-790-variants**.
+  3. Press **OMONOB 2.0.1 classic** and wait for `CPMAP_VARIANT_OK`.
+  4. Do a full reboot of the head unit (hold the power button for about 10 s).
+
+  To return to YANDEX-2026, do the same with the **YANDEX-2026** button.
+- **Removed:** variants YANDEX11–55 and GOOGLE11–22, the libcardshim library and the CLUSTER_ZOOM setting, the separate RAM-log switch (logging works as in omonob 2.0.1).
+- **Installation:** installs over v1 without Restore factory files; the previous version's buttons are removed from the menu automatically. Unplug the CarPlay cable before installing.
+- **Documentation:** README and CHANGELOG updated, zone diagrams added for both variants. omonob files in the repository updated to 2.0.1.
+
 | | |
 |---|---|
 | 🕒 **Arrival time** | shown with the Left and Right card (omonob 2.0.1 has it off) |
@@ -233,6 +250,22 @@ The ready-made SD-card archive is in [Releases](https://github.com/sli25555-spec
 
 ### 🧭 Карточку манёвра — стрелка, метры, улица
 ### 🕒 Время прибытия под карточкой
+## Изменения в v2 по сравнению с v1
+
+- **Новая база — omonob 2.0.1** (вместо 1.2.2). Добавлены: страница Virtual Cockpit settings в App-Connect; выбор положения карточки Left / Right / Center / Off с автоматической сменой зоны при начале и окончании ведения по маршруту; Mirroring; ограничение размера логов и освобождение видеобуфера.
+- **Два варианта вместо восьми:**
+  - **YANDEX-2026** (устанавливается по умолчанию) — зоны под Яндекс Карты, Яндекс Навигатор и Yango Maps, подобранные в автомобиле; время прибытия при карточке Left и Right; 30 кадров/с.
+  - **OMONOB 2.0.1 classic** — оригинальная версия omonob без изменений.
+- **Переключение на оригинальный omonob** выполняется прямо в магнитоле, без переустановки:
+  1. Вставьте SD-карту с этой сборкой.
+  2. MQB Toolbox → mqbcoding → Customization → CarPlay Maps VC → **cpmap-790-variants**.
+  3. Нажмите **OMONOB 2.0.1 classic** и дождитесь `CPMAP_VARIANT_OK`.
+  4. Выполните полную перезагрузку магнитолы (удерживать кнопку питания ~10 с).
+
+  Возврат к YANDEX-2026 — так же, кнопкой **YANDEX-2026**.
+- **Удалено:** варианты YANDEX11–55 и GOOGLE11–22, библиотека libcardshim и параметр CLUSTER_ZOOM, отдельный переключатель RAM-логов (логи работают как в omonob 2.0.1).
+- **Установка:** поверх v1 без Restore factory files, кнопки предыдущей версии удаляются из меню автоматически. Перед установкой отключите кабель CarPlay.
+- **Документация:** обновлены README и CHANGELOG, добавлены схемы зон обоих вариантов. Файлы omonob в репозитории обновлены до версии 2.0.1.
 
 | | |
 |---|---|
