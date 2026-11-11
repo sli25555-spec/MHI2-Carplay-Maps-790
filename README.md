@@ -20,7 +20,9 @@ Columbus MHI2 (MU1440) · 790 cluster (AID 10.25") · based on [omonob/MHI2-Carp
 <sub>Unofficial modification, not affiliated with omonob · Неофициальная модификация, не связана с omonob</sub>
 
 </div>
-
+<img src="https://github.com/user-attachments/assets/bfc971da-6364-4492-add0-1de6b02e6a33" width="49%" alt="CarPlay map on the Škoda 790 cluster">
+<img src="https://github.com/user-attachments/assets/a4d54a4d-d126-49d1-b6a0-1c22eacb6564" width="49%" alt="CarPlay map on the Škoda 790 cluster">
+<img src="https://github.com/user-attachments/assets/3176713a-e8ee-4e98-901e-2d82d1c3f2c2" width="49%" alt="CarPlay map on the Škoda 790 cluster">
 <p align="center">
 <img src="https://github.com/user-attachments/assets/e5c7b4e3-96d7-43c1-9a33-410941e217a1" width="49%" alt="CarPlay map on the Škoda 790 cluster">
 <img src="https://github.com/user-attachments/assets/b1311e19-be83-4677-89f0-0846fcefa311" width="49%" alt="CarPlay map on the Škoda 790 cluster">
@@ -28,7 +30,10 @@ Columbus MHI2 (MU1440) · 790 cluster (AID 10.25") · based on [omonob/MHI2-Carp
 <img src="https://github.com/user-attachments/assets/0fec5886-474c-4739-8ff3-4e0f8ef41d07" width="49%" alt="CarPlay map on the Škoda 790 cluster">
 <img src="https://github.com/user-attachments/assets/8de28b46-e210-48e3-91e1-9cd0cc2adc01" width="49%" alt="CarPlay map on the Škoda 790 cluster">
 <img src="https://github.com/user-attachments/assets/f2b5dab9-9fb6-4651-af20-cd2b33df43a2" width="49%" alt="CarPlay map on the Škoda 790 cluster">
+
 </p>
+
+
 
 ---
 
