@@ -3,7 +3,7 @@
 PAYLOAD="$1"
 EXPECTED_MU="$2"
 INSTRUMENT="$3"
-VERSION="V70-PLAINTEXT-TOOLBOX-1.2.2"
+VERSION="VC-PLAINTEXT-TOOLBOX-2.0.1"
 
 fail() {
     echo "CPMAP_INSTALL_FAIL=$1"
@@ -63,18 +63,21 @@ fi
 if [ "$DETECTED_MU" = "MU1440" ] && [ "$INSTRUMENT" != "790" ]; then
     fail "MU1440_REQUIRES_790"
 fi
+if [ -e "$MMX/dev/ipod0" ]; then
+    fail "DISCONNECT_CARPLAY_BEFORE_INSTALL"
+fi
 
 PROFILE_DIR="$PAYLOAD/profiles/$EXPECTED_MU/$INSTRUMENT"
 CORE="$PROFILE_DIR/core.so"
-# Local build (D.): optional variant name shown in the status screen.
+# MHI2-Carplay-Maps 790 v2: variant name of the default core.so (status screen).
 if [ -s "$PROFILE_DIR/VARIANT" ]; then
     read CPMAP_VARIANT < "$PROFILE_DIR/VARIANT"
     VERSION="$VERSION+$CPMAP_VARIANT"
 fi
 WRAPPER="$PAYLOAD/common/dio_manager.wrapper.sh"
 CONTROL_JAR="$PAYLOAD/common/CarPlayClusterControls.jar"
-if [ "$EXPECTED_MU" = "MU1440" ] && [ -s "$PAYLOAD/profiles/MU1440/790/CarPlayClusterControls.jar" ]; then
-    CONTROL_JAR="$PAYLOAD/profiles/MU1440/790/CarPlayClusterControls.jar"
+if [ -s "$PAYLOAD/profiles/$EXPECTED_MU/$INSTRUMENT/CarPlayClusterControls.jar" ]; then
+    CONTROL_JAR="$PAYLOAD/profiles/$EXPECTED_MU/$INSTRUMENT/CarPlayClusterControls.jar"
 fi
 NAV_JAR="$PAYLOAD/common/CarPlayNavigationPatch.jar"
 NAV_TARGET="$JARS/CarPlayNavigationPatch.jar"
@@ -84,8 +87,17 @@ SUPERVISOR="$PAYLOAD/common/carplay-cluster-supervisor"
 SEC="$PAYLOAD/common/libcarplay-security-bridge.so"
 PAIR_HELPER="$PAYLOAD/common/carplay-pairing-helper"
 PAIR_CORE="$PAYLOAD/common/libCarPlayPairingCore.so"
+MENU_JAR="$PAYLOAD/profiles/$EXPECTED_MU/$INSTRUMENT/VCMenu.jar"
+RATE_JAR="$PAYLOAD/profiles/$EXPECTED_MU/$INSTRUMENT/VCMirrorRate.jar"
+MIRROR="$PAYLOAD/common/cpvc-mirror-canvas-$INSTRUMENT"
+TAP="$PAYLOAD/common/libcpvc-mirror-tap.so"
+QUERY="$PAYLOAD/common/libcpvc-dmdt-query.so"
+# Do not let the public installer dismantle a private encrypted installation.
+if [ -s "$ROOT/cpmap-auth" ] || grep -q 'VCMenu-V73.jar' "$LSD"; then
+    fail "ENCRYPTED_INSTALLATION_REQUIRES_ITS_OWN_MIGRATION_TOOL"
+fi
 
-for required in "$CORE" "$WRAPPER" "$CONTROL_JAR" "$NAV_CHECK" "$BRIDGE" "$SUPERVISOR" "$SEC" "$PAIR_HELPER" "$PAIR_CORE"; do
+for required in "$CORE" "$WRAPPER" "$CONTROL_JAR" "$NAV_CHECK" "$BRIDGE" "$SUPERVISOR" "$SEC" "$PAIR_HELPER" "$PAIR_CORE" "$MENU_JAR" "$RATE_JAR" "$MIRROR" "$TAP" "$QUERY"; do
     [ -s "$required" ] || fail "PAYLOAD_MISSING_`basename "$required"`"
 done
 
@@ -164,8 +176,9 @@ echo "CarPlay Maps VC"
 echo "Free open-source project by omonob (QCDWJ)"
 echo "Detected firmware: $DETECTED_MU (lsd.jxe $JXE_SIZE bytes)"
 echo "Selected cluster: $INSTRUMENT"
-echo "Scope: CarPlay map video and steering-wheel map controls only"
-echo "No music metadata, navigation text, startup animation, device binding, or watchdog"
+echo "Scope: VC settings, CarPlay map video, native mirroring and navigation cards"
+echo "Wireless CarPlay: saved test interface only; no wireless service is included"
+echo "No music metadata, startup animation, device binding, or paid watchdog"
 
 if [ -n "${CPMAP_TEST_ROOT:-}" ]; then
     :
@@ -193,6 +206,11 @@ fi
 if [ -s "$NAV_TARGET" ]; then
     cp "$NAV_TARGET" "$STAGE/nav.current" || fail "CURRENT_NAV_SNAPSHOT_FAILED"
 fi
+for name in VCMenu.jar VCMirrorRate.jar; do
+    if [ -e "$JARS/$name" ]; then
+        cp "$JARS/$name" "$STAGE/$name.current" || fail "CURRENT_MENU_SNAPSHOT_FAILED"
+    fi
+done
 
 STOCK=""
 for candidate in \
@@ -254,6 +272,7 @@ else
 fi
 
 ADD_CLASSPATH='$BASE_DIR/lsd/jars/CarPlayClusterControls.jar'
+ADD_CLASSPATH='$BASE_DIR/lsd/jars/VCMenu.jar:$BASE_DIR/lsd/jars/VCMirrorRate.jar:'"$ADD_CLASSPATH"
 if [ "$NAV_USE_OWN" = yes ]; then
     [ -z "$ADD_CLASSPATH" ] || ADD_CLASSPATH="$ADD_CLASSPATH:"
     ADD_CLASSPATH="$ADD_CLASSPATH"'$BASE_DIR/lsd/jars/CarPlayNavigationPatch.jar'
@@ -276,7 +295,7 @@ else
                 value=substr($0,RSTART+18,RLENGTH-18)
                 count=split(value,items,":")
                 for(i=1;i<=count;i++) {
-                    if(items[i] ~ /\/CarPlayClusterControls\.jar$/ || items[i] ~ /\/CarPlayNavigationPatch\.jar$/) continue
+                    if(items[i] ~ /\/CarPlayClusterControls\.jar$/ || items[i] ~ /\/CarPlayNavigationPatch\.jar$/ || items[i] ~ /\/VCMenu\.jar$/ || items[i] ~ /\/VCMirrorRate\.jar$/) continue
                     if(length(items[i]) && !seen[items[i]]++) kept=kept ":" items[i]
                 }
             }
@@ -304,39 +323,38 @@ cp "$CORE" "$NEW/core.so" || fail "CORE_COPY_FAILED"
 cp "$WRAPPER" "$NEW/dio_manager.wrapper.sh" || fail "WRAPPER_COPY_FAILED"
 cp "$BRIDGE" "$NEW/altscreen-most-bridge" || fail "BRIDGE_COPY_FAILED"
 cp "$SUPERVISOR" "$NEW/carplay-cluster-supervisor" || fail "SUPERVISOR_COPY_FAILED"
-# Local build (D.): RAM-disk logs are OFF by default. The supervisor variant
-# writes the MOST bridge log to /dev/null (mathsls patch at 0x47c0) and the
-# NO_RAM_LOGS flag makes the dio_manager wrapper send the video and session logs
-# to /dev/null. The variant menu can switch them back on.
-if [ -s "$PAYLOAD/common/carplay-cluster-supervisor.nolog" ]; then
-    cp "$PAYLOAD/common/carplay-cluster-supervisor.nolog" "$NEW/carplay-cluster-supervisor" || fail "SUPERVISOR_NOLOG_COPY_FAILED"
-    echo off > "$NEW/NO_RAM_LOGS" || fail "RAM_LOG_FLAG_FAILED"
-    chmod 644 "$NEW/NO_RAM_LOGS"
-    echo "CPMAP_RAM_LOGS=OFF"
-fi
 cp "$SEC" "$NEW/libcarplay-security-bridge.so" || fail "SESSION_BRIDGE_COPY_FAILED"
 cp "$PAIR_HELPER" "$NEW/security_bridge/carplay-pairing-helper" || fail "PAIR_HELPER_COPY_FAILED"
 cp "$PAIR_CORE" "$NEW/security_bridge/libCarPlayPairingCore.so" || fail "PAIR_CORE_COPY_FAILED"
-# Optional cluster shim (from mathsls fork, GPL-3.0): announces the cluster
-# display as "Instrument Cluster" and can set the turn-card style.
-if [ -s "$PROFILE_DIR/libcardshim.so" ]; then
-    cp "$PROFILE_DIR/libcardshim.so" "$NEW/libcardshim.so" || fail "CARDSHIM_COPY_FAILED"
-    chmod 644 "$NEW/libcardshim.so"
-fi
-if [ -s "$PROFILE_DIR/CLUSTER_ZOOM" ]; then
-    cp "$PROFILE_DIR/CLUSTER_ZOOM" "$NEW/CLUSTER_ZOOM" || fail "CLUSTER_ZOOM_COPY_FAILED"
-    chmod 644 "$NEW/CLUSTER_ZOOM"
-fi
+cp "$MIRROR" "$NEW/cpvc-mirror-canvas" || fail "MIRROR_COPY_FAILED"
+cp "$TAP" "$NEW/libcpvc-mirror-tap.so" || fail "TAP_COPY_FAILED"
+cp "$QUERY" "$NEW/libcpvc-dmdt-query.so" || fail "QUERY_COPY_FAILED"
+for name in VCMenu.jar VCMirrorRate.jar; do
+    if [ -e "$ROOT/rollback/$name.absent" ]; then
+        touch "$NEW/rollback/$name.absent" || fail "MENU_BACKUP_MARK_FAILED"
+    elif [ -s "$ROOT/rollback/$name" ]; then
+        cp "$ROOT/rollback/$name" "$NEW/rollback/$name" || fail "MENU_BACKUP_FAILED"
+    elif [ -e "$JARS/$name" ]; then
+        cp "$JARS/$name" "$NEW/rollback/$name" || fail "MENU_BACKUP_FAILED"
+    else
+        touch "$NEW/rollback/$name.absent" || fail "MENU_BACKUP_MARK_FAILED"
+    fi
+done
 echo "$VERSION" > "$NEW/VERSION"
 echo "$DETECTED_MU/$INSTRUMENT" > "$NEW/PROFILE"
 touch "$NEW/CLUSTER_AUTO_ENABLE"
 
 chmod 755 "$NEW/dio_manager.wrapper.sh" "$NEW/altscreen-most-bridge" "$NEW/carplay-cluster-supervisor" "$NEW/security_bridge/carplay-pairing-helper" "$NEW/stock_first/dio_manager.real"
 chmod 644 "$NEW/core.so" "$NEW/libcarplay-security-bridge.so" "$NEW/security_bridge/libCarPlayPairingCore.so" "$NEW/VERSION" "$NEW/PROFILE" "$NEW/CLUSTER_AUTO_ENABLE"
+chmod 755 "$NEW/cpvc-mirror-canvas"
+chmod 644 "$NEW/libcpvc-mirror-tap.so" "$NEW/libcpvc-dmdt-query.so"
 
 cp "$CONTROL_JAR" "$JARS/CarPlayClusterControls.jar.new" || fail "CONTROL_JAR_STAGE_FAILED"
+cp "$MENU_JAR" "$JARS/VCMenu.jar.new" || fail "MENU_JAR_STAGE_FAILED"
+cp "$RATE_JAR" "$JARS/VCMirrorRate.jar.new" || fail "RATE_JAR_STAGE_FAILED"
 cp "$STAGE/lsd.sh.patched" "$LSD.cpmap-new" || fail "LSD_ACTIVATION_STAGE_FAILED"
 chmod 644 "$JARS/CarPlayClusterControls.jar.new"
+chmod 644 "$JARS/VCMenu.jar.new" "$JARS/VCMirrorRate.jar.new"
 chmod 755 "$LSD.cpmap-new"
 if [ "$NAV_INSTALL" = yes ]; then
     cp "$NAV_JAR" "$NAV_TARGET.new" || fail "NAV_JAR_STAGE_FAILED"
@@ -354,6 +372,13 @@ mv "$NEW" "$ROOT" || {
 rollback_commit() {
     cp "$STAGE/dio_manager.current" "$DIO" 2>/dev/null || true
     cp "$STAGE/lsd.sh.current" "$LSD" 2>/dev/null || true
+    for name in VCMenu.jar VCMirrorRate.jar; do
+        if [ -e "$STAGE/$name.current" ]; then
+            cp "$STAGE/$name.current" "$JARS/$name" 2>/dev/null || true
+        else
+            rm -f "$JARS/$name" 2>/dev/null
+        fi
+    done
     if [ -s "$STAGE/control.current" ]; then
         cp "$STAGE/control.current" "$JARS/CarPlayClusterControls.jar" 2>/dev/null || true
     else
@@ -369,6 +394,8 @@ rollback_commit() {
 }
 
 mv "$JARS/CarPlayClusterControls.jar.new" "$JARS/CarPlayClusterControls.jar" || { rollback_commit; fail "CONTROL_JAR_ACTIVATION_FAILED"; }
+mv "$JARS/VCMenu.jar.new" "$JARS/VCMenu.jar" || { rollback_commit; fail "MENU_JAR_ACTIVATION_FAILED"; }
+mv "$JARS/VCMirrorRate.jar.new" "$JARS/VCMirrorRate.jar" || { rollback_commit; fail "RATE_JAR_ACTIVATION_FAILED"; }
 if [ "$NAV_INSTALL" = yes ]; then
     mv "$NAV_TARGET.new" "$NAV_TARGET" || { rollback_commit; fail "NAV_JAR_ACTIVATION_FAILED"; }
 fi
@@ -383,22 +410,26 @@ rm -f "$ROOT/cpmap-guard" "$ROOT/cpmap-auth" "$ROOT/cpmap-provision" "$ROOT/intr
 [ -s "$ROOT/core.so" ] || fail "CORE_VERIFY_FAILED"
 [ -s "$ROOT/stock_first/dio_manager.real" ] || fail "STOCK_VERIFY_FAILED"
 [ -s "$JARS/CarPlayClusterControls.jar" ] || fail "CONTROL_JAR_VERIFY_FAILED"
+run_nav_check --same "$MENU_JAR" "$JARS/VCMenu.jar" || { rollback_commit; fail "MENU_VERIFY_FAILED"; }
+run_nav_check --same "$RATE_JAR" "$JARS/VCMirrorRate.jar" || { rollback_commit; fail "RATE_VERIFY_FAILED"; }
 active_reference_count() {
     awk -v name="$1" '/^[ \t]*#/ {next} index($0,name) {n++} END {print n+0}' "$LSD"
 }
 [ `active_reference_count 'CarPlayClusterControls.jar'` -eq 1 ] || fail "BOOTCLASSPATH_VERIFY_FAILED"
+[ `active_reference_count 'VCMenu.jar'` -eq 1 ] || { rollback_commit; fail "MENU_CLASSPATH_VERIFY_FAILED"; }
+[ `active_reference_count 'VCMirrorRate.jar'` -eq 1 ] || { rollback_commit; fail "RATE_CLASSPATH_VERIFY_FAILED"; }
 if [ "$NAV_INSTALL" = yes ]; then
     navigation_payload_intact "$NAV_TARGET" && run_nav_check --same "$NAV_JAR" "$NAV_TARGET" || { rollback_commit; fail "NAVIGATION_VERIFY_FAILED"; }
     [ `active_reference_count 'CarPlayNavigationPatch.jar'` -eq 1 ] || { rollback_commit; fail "NAVIGATION_CLASSPATH_VERIFY_FAILED"; }
 fi
 rm -rf "$OLD" "$STAGE" 2>/dev/null
 
-# Local build (D.): install the MU1440/790 variant-switch menu if it is
-# on the SD card. Never fails the installation. Scripts of older builds of
-# this menu are removed first so no stale buttons/scripts stay behind.
+# MHI2-Carplay-Maps 790 v2: install the MU1440/790 variant menu from the SD
+# card. Never fails the installation. Menu scripts of older builds (all versions) are
+# removed first so no stale buttons/scripts stay behind.
 MENU_SRC="$PAYLOAD/../menu790"
 ENGDEFS="$APP/eso/hmi/engdefs"
-if [ -s "$MENU_SRC/cpmap-790-variants.esd" ] && [ -d "$ENGDEFS/scripts/mqb" ]; then
+if [ "$DETECTED_MU/$INSTRUMENT" = "MU1440/790" ] && [ -s "$MENU_SRC/cpmap-790-variants.esd" ] && [ -d "$ENGDEFS/scripts/mqb" ]; then
     rm -f "$ENGDEFS/scripts/mqb/"cpmap_variant*.sh 2>/dev/null
     if cp "$MENU_SRC/cpmap-790-variants.esd" "$ENGDEFS/cpmap-790-variants.esd" 2>/dev/null &&
        cp "$MENU_SRC/"cpmap_variant*.sh "$ENGDEFS/scripts/mqb/" 2>/dev/null; then
@@ -406,6 +437,18 @@ if [ -s "$MENU_SRC/cpmap-790-variants.esd" ] && [ -d "$ENGDEFS/scripts/mqb" ]; t
         echo "CPMAP_VARIANT_MENU=INSTALLED"
     else
         echo "CPMAP_VARIANT_MENU=COPY_FAILED (main install is OK)"
+    fi
+    # A Toolbox installed with omonob 1.2.x has an older "Restore factory
+    # files" script that does not restore VCMenu.jar/VCMirrorRate.jar.
+    # Refresh it from the SD card (2.0.1 version) when it is there.
+    TB_RESTORE="$PAYLOAD/../../../Toolbox/scripts/cpmap_restore_core.sh"
+    if [ -s "$TB_RESTORE" ] && [ -s "$ENGDEFS/scripts/mqb/cpmap_restore_core.sh" ] &&
+       ! grep -q 'VCMenu.jar' "$ENGDEFS/scripts/mqb/cpmap_restore_core.sh" 2>/dev/null; then
+        if cp "$TB_RESTORE" "$ENGDEFS/scripts/mqb/cpmap_restore_core.sh.new" 2>/dev/null &&
+           mv "$ENGDEFS/scripts/mqb/cpmap_restore_core.sh.new" "$ENGDEFS/scripts/mqb/cpmap_restore_core.sh" 2>/dev/null; then
+            chmod 755 "$ENGDEFS/scripts/mqb/cpmap_restore_core.sh" 2>/dev/null
+            echo "CPMAP_TOOLBOX_RESTORE=UPDATED"
+        fi
     fi
 fi
 

@@ -1,11 +1,13 @@
 #!/bin/ksh
-# MHI2-Carplay-Maps 790 v1 - switch MU1440/790 variants from the SD card.
-# Usage: cpmap_variant.sh OMONOB|YANDEX11|YANDEX22|YANDEX33|YANDEX44|YANDEX55|GOOGLE11|GOOGLE22|show
-# Changes only core.so, libcardshim.so, CLUSTER_ZOOM and VERSION inside
-# /mnt/app/carplaymaps. "Restore factory files" still removes everything.
+# MHI2-Carplay-Maps 790 v2 - switch MU1440/790 variants from the SD card.
+# Based on omonob/MHI2-Carplay-Maps 2.0.1 (GPL-3.0).
+# Usage: cpmap_variant.sh YANDEX-2026|OMONOB201|show
+# Changes only core.so and VERSION inside /mnt/app/carplaymaps.
+# "Restore factory files" still removes everything.
 export PATH=/proc/boot:/bin:/usr/bin:/usr/sbin:/sbin:/mnt/app/armle/bin:/mnt/app/armle/sbin:/mnt/app/armle/usr/bin:/mnt/app/armle/usr/sbin:$PATH
 
 WANT="$1"
+CORE_SIZE=50321
 fail() { echo "CPMAP_VARIANT_FAIL=$1"; exit 1; }
 
 if [ -n "${CPMAP_TEST_ROOT:-}" ]; then
@@ -25,16 +27,27 @@ DIO="$APP/eso/bin/apps/dio_manager"
 PROFILE=`cat "$ROOT/PROFILE" 2>/dev/null`
 [ "$PROFILE" = "MU1440/790" ] || fail "ONLY_FOR_MU1440_790_PROFILE_($PROFILE)"
 
-show() {
-    echo "Installed: `cat "$ROOT/VERSION"`"
-    if [ -s "$ROOT/libcardshim.so" ]; then echo "Instrument Cluster shim: on"; else echo "Instrument Cluster shim: off"; fi
-    if [ -s "$ROOT/CLUSTER_ZOOM" ]; then echo "Card style (zoomFactor): `cat "$ROOT/CLUSTER_ZOOM"`"; else echo "Card style: default"; fi
-    if [ -e "$ROOT/NO_RAM_LOGS" ]; then echo "RAM logs: OFF"; else echo "RAM logs: ON (original)"; fi
-    ram_usage
+# Navigation card position saved by the VC settings page (omonob 2.0).
+card_position() {
+    POS=""
+    for f in "$MMX/mnt/icab/persistent/cpmap-ui/navigation-card.state" /mnt/icab/persistent/cpmap-ui/navigation-card.state; do
+        [ -s "$f" ] || continue
+        while read l; do
+            case "$l" in position=*) POS="${l#position=}" ;; esac
+        done < "$f"
+        break
+    done
+    case "$POS" in
+        0) echo "Navigation card: Center" ;;
+        1) echo "Navigation card: Left (recommended)" ;;
+        2) echo "Navigation card: Right" ;;
+        3) echo "Navigation card: Off" ;;
+        *) echo "Navigation card: default (Right) or unknown" ;;
+    esac
 }
 
 # RAM disk fill level. df where available, otherwise the sum of file sizes
-# against the 20 MB RAM disk (size reported by mathsls for these units).
+# against the 20 MB RAM disk. The 16 MB video ring is part of the sum.
 ram_usage() {
     RD="$MMX/ramdisk"
     [ -d "$RD" ] || { echo "RAM disk: not found"; return 0; }
@@ -60,13 +73,19 @@ ram_usage() {
     fi
 }
 
+show() {
+    echo "Installed: `cat "$ROOT/VERSION"`"
+    card_position
+    ram_usage
+}
+
 if [ "$WANT" = show ]; then
     show
     exit 0
 fi
-case "$WANT" in OMONOB|YANDEX11|YANDEX22|YANDEX33|YANDEX44|YANDEX55|GOOGLE11|GOOGLE22) ;; *) fail "UNKNOWN_VARIANT_$WANT" ;; esac
+case "$WANT" in YANDEX-2026|OMONOB201) ;; *) fail "UNKNOWN_VARIANT_$WANT" ;; esac
 
-grep -q libcardshim "$DIO" 2>/dev/null || fail "INSTALL_790_FROM_THIS_PACKAGE_FIRST"
+grep -q 'VC-PLAINTEXT-TOOLBOX-2' "$ROOT/VERSION" 2>/dev/null || fail "INSTALL_OMONOB_2X_OR_THIS_PACKAGE_FIRST"
 
 SRC=""
 if [ -n "${CPMAP_TEST_SD:-}" ]; then
@@ -81,7 +100,7 @@ else
 fi
 [ -n "$SRC" ] && [ -s "$SRC/core.so" ] || fail "VARIANT_FILES_NOT_FOUND_ON_SD"
 line=`ls -ln "$SRC/core.so" 2>/dev/null`; set -- $line
-[ "$5" = 72794 ] || fail "CORE_SIZE_UNEXPECTED_$5"
+[ "$5" = "$CORE_SIZE" ] || fail "CORE_SIZE_UNEXPECTED_$5"
 [ -s "$SRC/VARIANT" ] || fail "VARIANT_LABEL_MISSING"
 read LABEL < "$SRC/VARIANT"
 
@@ -96,28 +115,11 @@ fi
 # core.so is mapped by the running dio_manager: write a new file and rename it over.
 cp "$SRC/core.so" "$ROOT/core.so.new" || fail "CORE_COPY_FAILED"
 line=`ls -ln "$ROOT/core.so.new" 2>/dev/null`; set -- $line
-[ "$5" = 72794 ] || { rm -f "$ROOT/core.so.new"; fail "CORE_COPY_INCOMPLETE"; }
+[ "$5" = "$CORE_SIZE" ] || { rm -f "$ROOT/core.so.new"; fail "CORE_COPY_INCOMPLETE"; }
 chmod 644 "$ROOT/core.so.new"
-
-SHIM_NEW=no
-if [ -s "$SRC/libcardshim.so" ]; then
-    cp "$SRC/libcardshim.so" "$ROOT/libcardshim.so.new" || { rm -f "$ROOT/core.so.new"; fail "SHIM_COPY_FAILED"; }
-    chmod 644 "$ROOT/libcardshim.so.new"
-    SHIM_NEW=yes
-fi
-
 mv "$ROOT/core.so.new" "$ROOT/core.so" || fail "CORE_ACTIVATION_FAILED"
-if [ "$SHIM_NEW" = yes ]; then
-    mv "$ROOT/libcardshim.so.new" "$ROOT/libcardshim.so" || fail "SHIM_ACTIVATION_FAILED"
-else
-    rm -f "$ROOT/libcardshim.so"
-fi
-if [ -s "$SRC/CLUSTER_ZOOM" ]; then
-    cp "$SRC/CLUSTER_ZOOM" "$ROOT/CLUSTER_ZOOM" && chmod 644 "$ROOT/CLUSTER_ZOOM"
-else
-    rm -f "$ROOT/CLUSTER_ZOOM"
-fi
-echo "V70-PLAINTEXT-TOOLBOX-1.2.2+$LABEL" > "$ROOT/VERSION"
+read CUR < "$ROOT/VERSION"
+echo "${CUR%%+*}+$LABEL" > "$ROOT/VERSION"
 sync 2>/dev/null || true
 
 echo "CPMAP_VARIANT_OK=$LABEL"

@@ -5,7 +5,7 @@
 **CarPlay map with turn card and arrival time on the Škoda virtual cockpit**<br>
 **CarPlay-карта с карточкой манёвра и временем прибытия на цифровой приборке Škoda**
 
-Columbus MHI2 (MU1440) · 790 cluster (AID 10.25") · based on [omonob/MHI2-Carplay-Maps](https://github.com/omonob/MHI2-Carplay-Maps) 1.2.2
+Columbus MHI2 (MU1440) · 790 cluster (AID 10.25") · based on [omonob/MHI2-Carplay-Maps](https://github.com/omonob/MHI2-Carplay-Maps) 2.0.1
 
 [![Release](https://img.shields.io/github/v/release/sli25555-spec/MHI2-Carplay-Maps-790?style=flat-square&label=release)](https://github.com/sli25555-spec/MHI2-Carplay-Maps-790/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/sli25555-spec/MHI2-Carplay-Maps-790/total?style=flat-square&label=downloads)](https://github.com/sli25555-spec/MHI2-Carplay-Maps-790/releases)
@@ -13,7 +13,7 @@ Columbus MHI2 (MU1440) · 790 cluster (AID 10.25") · based on [omonob/MHI2-Carp
 ![Platform](https://img.shields.io/badge/platform-MHI2%20%2F%20QNX%206.5-2f6f9f?style=flat-square)
 ![Head unit](https://img.shields.io/badge/MU1440-%C5%A0koda-4ba82e?style=flat-square)
 ![Cluster](https://img.shields.io/badge/cluster-790%20AID%2010.25%22-555?style=flat-square)
-[![Based on](https://img.shields.io/badge/based%20on-omonob%201.2.2-orange?style=flat-square)](https://github.com/omonob/MHI2-Carplay-Maps)
+[![Based on](https://img.shields.io/badge/based%20on-omonob%202.0.1-orange?style=flat-square)](https://github.com/omonob/MHI2-Carplay-Maps)
 
 **[⬇️ Download / Скачать](https://github.com/sli25555-spec/MHI2-Carplay-Maps-790/releases/latest)** · [English](#english) · [Русский](#русский)
 
@@ -34,47 +34,40 @@ Columbus MHI2 (MU1440) · 790 cluster (AID 10.25") · based on [omonob/MHI2-Carp
 
 ## English
 
-**What it is.** A build of omonob's [CarPlay Maps VC](https://github.com/omonob/MHI2-Carplay-Maps) for **Škoda with the Columbus MHI2 head unit (MU1440) and the 790 virtual cockpit**. The iPhone map is shown on the cluster, and on it you see:
+**What it is.** omonob's [CarPlay Maps VC 2.0.1](https://github.com/omonob/MHI2-Carplay-Maps) with a few data changes for **Škoda with the Columbus MHI2 head unit (MU1440) and the 790 virtual cockpit**. The iPhone map is shown on the cluster with:
 
 ### 🧭 Turn card — arrow, metres, street
-### 🕒 Time to destination
-
-Tested with Yandex Navigator, Google Maps, Amap and Apple Maps.
+### 🕒 Arrival time under the card
 
 | | |
 |---|---|
-| 🗺️ **Turn card and arrival time** | drawn by the iPhone itself, right in the cluster map |
-| 🎯 **Zones for Yandex, Google and Apple** | cursor higher and closer to the centre, card at the edge |
-| 🔀 **8 variants in the menu** | switched from MQB Toolbox without reinstalling |
-| 🧹 **RAM logs off** | the head unit's 20 MB RAM disk does not fill up on long drives |
+| 🕒 **Arrival time** | shown with the Left and Right card (omonob 2.0.1 has it off) |
+| 🎯 **YANDEX-2026 zones** | cursor, card and arrival time placed for Yandex Maps on the 790 cluster, tuned in the car |
+| 🎞️ **30 fps** | instead of 60 |
+| 🔀 **Variant menu** | YANDEX-2026 or the unchanged omonob 2.0.1, switched from MQB Toolbox |
+| ✅ **Everything from omonob 2.0.1** | Virtual Cockpit settings page, card Left / Right / Center / Off, Mirroring, logging and video buffer as in the original |
 | ↩️ **Full rollback** | Restore factory files brings back the factory files |
 
 ### ⚡ Quick install
 
-1. Download `MHI2-Carplay-Maps-790-v1.zip` from [Releases](https://github.com/sli25555-spec/MHI2-Carplay-Maps-790/releases/latest) and extract it **to the root** of the SD card (FAT32).
-2. MQB Toolbox → mqbcoding → Customization → CarPlay Maps VC → **Install 790 AID 10.5**.
-3. Wait for `CPMAP_INSTALL_OK`, then do a **full reboot** of the head unit (hold the power button for about 10 s).
+1. Download `MHI2-Carplay-Maps-790-v2.zip` from [Releases](https://github.com/sli25555-spec/MHI2-Carplay-Maps-790/releases/latest) and extract it **to the root** of the SD card (FAT32).
+2. **Unplug the CarPlay cable.** The installer stops otherwise (`DISCONNECT_CARPLAY_BEFORE_INSTALL`).
+3. MQB Toolbox → mqbcoding → Customization → CarPlay Maps VC → **Install AID 10.5** (with a Toolbox from omonob 1.2.x the button is called **Install 790 AID 10.5**).
+4. Wait for `CPMAP_INSTALL_OK`, then do a **full reboot** of the head unit (hold the power button for about 10 s).
+5. App-Connect settings → **Virtual Cockpit settings** → Navigation card → **Left** or **Right**.
 
-### ✅ After installation the YANDEX11 variant is active (for Yandex Navigator)
+### ✅ After installation the YANDEX-2026 variant is active
 
-### 🔀 If you use Google Maps, Apple Maps, Amap, etc. — switch to GOOGLE11 or GOOGLE22
-
-**All variants differ from each other mainly in where the cursor arrow sits.**
-
-**MQB Toolbox → mqbcoding → Customization → CarPlay Maps VC → cpmap-790-variants → the variant's button → wait for `CPMAP_VARIANT_OK` → full reboot.**
-
-**What each variant does: see [“How to switch variants: zone diagrams”](#variants-en) below.**
+It installs over v1 and over omonob 1.2.x / 2.0.x; Restore first is not needed. The buttons of v1 are removed from the menu.
 
 > [!WARNING]
 > Modifying head-unit files can cause boot failures. Use at your own risk, with the car parked, on stable power and with a backup. Only the configuration under “Compatibility” has been tested.
 
 <a id="variants-en"></a>
 <details>
-<summary><b>🔀 How to switch variants: zone diagrams</b></summary>
+<summary><b>🔀 Variants and zones</b></summary>
 
 <br>
-
-### ❗ Installation sets YANDEX11. If you use Google Maps, Apple Maps, Amap, etc., pick your variant below: GOOGLE11 or GOOGLE22!
 
 **How to switch:**
 1. Insert the SD card with this build into the head unit. It is needed for switching.
@@ -82,40 +75,26 @@ Tested with Yandex Navigator, Google Maps, Amap and Apple Maps.
 3. Press the variant's button and wait for `CPMAP_VARIANT_OK`.
 4. Do a full reboot of the head unit (hold the power button for about 10 s).
 
-The **Show** button in the same menu shows which variant is active.
+**Show** in the same menu displays the active variant, the card side and how full the RAM disk is. About 80 % while the map is running is normal: that is omonob's 16 MB video buffer.
 
-The **zone** is the area of the cluster video (1010×376) inside which the navigation app places the cursor, the turn card and the arrival time. The map always fills the whole screen.
-- the card hangs from the zone's top-left corner;
-- the arrival time sits at its bottom-left corner;
-- the cursor is placed near the bottom of the zone.
+The **zone** is the area of the cluster video (1010×376) inside which the navigation app places the cursor, the turn card and the arrival time. The map always fills the whole screen. omonob 2.0.1 picks one of five zones by itself, from the card side chosen in Virtual Cockpit settings and from whether CarPlay is guiding a route. Without a route Left, Right and Off share one zone; Center has one zone always.
 
-The dark areas on the diagrams are the cluster's own frames (clock, “P”, speed, odometer). Card, cursor and frame positions are approximate, taken from photos.
-
-| Variant | Zone X | Zone Y | Turn card | Arrival time |
-|---|---|---|---|---|
-| **YANDEX11** (default) — everything roughly centred | 30–808 | 41–333 | top left | yes |
-| **YANDEX22** — everything shifted slightly to the right | 65–808 | 41–333 | top left | yes |
-| **YANDEX33** — arrow centred only when no route is set | 100–850 | 41–333 | top left | yes |
-| **YANDEX44** — arrow exactly centred only while following a route | 20–838 | 41–333 | top left | yes |
-| **YANDEX55** — hints at the top, arrow always centred | 100–810 | 41–333 | top strip | no |
-| **GOOGLE11** — everything roughly centred | 65–808 | 41–351 | top left | yes |
-| **GOOGLE22** — arrow exactly centred only while following a route | 45–795 | 41–351 | top left | yes |
-| **OMONOB 1.2.2 classic** — omonob's original, map only | 202–808 | 16–360 | no | no |
+| Zone (X / Y) | **YANDEX-2026** (default) | **OMONOB 2.0.1 classic** |
+|---|---|---|
+| No route | 214–820 / 55–339 | 202–808 / 16–360 |
+| Left + route | 0–692 / 55–339 | 18–624 / 75–359 |
+| Right + route | 346–999 / 55–339 | 386–992 / 75–359 |
+| Center | 325–685 / 30–349 | 325–685 / 75–359 |
+| Off + route | 42–648 / 16–360 | 42–648 / 16–360 |
+| Arrival time | Left and Right | no |
+| Frame rate | 30 fps | 60 fps |
 
 <p>
-<img src="skoda-mu1440-790/docs/zones/YANDEX11.svg" width="49%" alt="YANDEX11">
-<img src="skoda-mu1440-790/docs/zones/YANDEX22.svg" width="49%" alt="YANDEX22">
-<img src="skoda-mu1440-790/docs/zones/YANDEX33.svg" width="49%" alt="YANDEX33">
-<img src="skoda-mu1440-790/docs/zones/YANDEX44.svg" width="49%" alt="YANDEX44">
-<img src="skoda-mu1440-790/docs/zones/YANDEX55.svg" width="49%" alt="YANDEX55">
-<img src="skoda-mu1440-790/docs/zones/GOOGLE11.svg" width="49%" alt="GOOGLE11">
-<img src="skoda-mu1440-790/docs/zones/GOOGLE22.svg" width="49%" alt="GOOGLE22">
-<img src="skoda-mu1440-790/docs/zones/OMONOB.svg" width="49%" alt="OMONOB">
+<img src="skoda-mu1440-790/docs/zones/YANDEX-2026.svg" width="100%" alt="YANDEX-2026 zones">
+<img src="skoda-mu1440-790/docs/zones/OMONOB201.svg" width="100%" alt="OMONOB 2.0.1 zones">
 </p>
 
-Also in the menu:
-- **RAM logs: OFF / ON** works with any variant. ON is only needed for diagnostics;
-- **Show** displays the variant, the log state and how full the RAM disk is, in %.
+Card and cursor positions on the diagrams are approximate; iOS and the navigation app decide how they are drawn.
 
 </details>
 
@@ -140,8 +119,9 @@ Also in the menu:
 | Yandex Navigator / Maps | ✅ | ✅ | ✅ | ❌ (Yandex does not support it) |
 | Google Maps | ✅ | ✅ | ✅ | ✅ |
 | Amap | ✅ | ✅ | ✅ | ✅ |
-| 2GIS | ✅ | not tested | not tested | ❌ |
 | Apple Maps | ✅ | ✅ | ✅ | not tested |
+
+The YANDEX-2026 zones were tuned in the car with Yandex Maps. Google Maps, Amap and Apple Maps were tested with the v1 build; with the YANDEX-2026 zones their cursor may sit a little differently.
 
 **Not tested:** other cars and firmware, the 791 cluster (12.3"), wireless CarPlay adapters. Other projects report that the cluster picture does not get through such adapters.
 
@@ -158,24 +138,22 @@ Tested it on your car? Post in [Discussions](https://github.com/sli25555-spec/MH
 flowchart LR
     phone["📱 iPhone<br/>CarPlay"]
     subgraph unit["Columbus MHI2 head unit (MU1440)"]
-        core["core.so (omonob)<br/>second screen for the iPhone:<br/>zone, URL, fps"]
-        shim["libcardshim (mathsls)<br/>'this is a cluster'"]
+        core["core.so (omonob)<br/>second screen for the iPhone:<br/>zones, URL, fps"]
         ring["video buffer<br/>16 MB RAM disk"]
         bridge["altscreen-most-bridge<br/>video to MOST"]
     end
     cluster["🖥️ 790 cluster<br/>map window"]
     phone -- "which screens do you have?" --> core
-    shim -.->|"adds to the answer"| core
-    core -- "1010×376, zone, showETA" --> phone
+    core -- "1010×376, zones, showETA" --> phone
     phone -- "H.264 video:<br/>map + card + ETA" --> core
     core --> ring --> bridge -- "MOST" --> cluster
 ```
 
-1. The iPhone asks the head unit which screens it has. `core.so` answers: there is a 1010×376 cluster, here are its zone and its URL `maps:/car/instrumentcluster?showETA=yes`. The shim adds “this is an Instrument Cluster” to the answer.
-2. iOS and the navigation app draw a separate map for the cluster and place the cursor, card and arrival time inside the zone. The iPhone sends all of it as a video stream.
+1. The iPhone asks the head unit which screens it has. omonob's `core.so` answers: a 1010×376 cluster, its five zones and the card URL. In this build the Left and Right URLs ask for the arrival time (`showETA=yes`).
+2. iOS and the navigation app draw a separate map for the cluster and place the cursor, card and arrival time inside the active zone. The iPhone sends it as a video stream.
 3. The head unit passes the video to the cluster over the MOST bus. The cluster shows it in the map window and draws its own frames on top: clock, “P”, speed, odometer.
 
-So a variant only changes **what the head unit tells the iPhone**. How things are drawn is up to iOS and the navigation app.
+A variant only changes **what the head unit tells the iPhone**. How things are drawn is up to iOS and the navigation app.
 
 </details>
 
@@ -184,46 +162,37 @@ So a variant only changes **what the head unit tells the iPhone**. How things ar
 
 <br>
 
-**`…CHECKSUM_MISMATCH…` / `…CLASSES_MISSING…` during installation.** Most likely files of an older version are still on the SD card. Format the card, extract the whole archive again and repeat Install 790.
+**`DISCONNECT_CARPLAY_BEFORE_INSTALL`.** Unplug the CarPlay cable and press Install again.
+
+**`…CHECKSUM_MISMATCH…` / `…CLASSES_MISSING…` during installation.** Most likely files of an older version are still on the SD card. Delete the `Custom/carplay_maps_vc` folder on the card, extract the whole archive again and repeat Install.
 
 **`PROFILE_MISMATCH` / `UNSUPPORTED_JXE_SIZE`.** The head-unit firmware is not the one this build targets. The installer has not changed anything.
 
 **No map on the cluster.**
 - The map only appears once the factory navigation has loaded; wait 1–2 minutes after switching on.
 - The iPhone must be connected **by cable**.
+- Virtual Cockpit settings: VC Maps must be on.
 
-**No turn card.** Check that a route is set and that OMONOB is not selected (it has no card). The card's colour and size are chosen by iOS and the navigation app.
+**No turn card or no arrival time.** Check that a route is set. The arrival time is shown only with the Left and Right card, and not with OMONOB 2.0.1 classic.
 
-**The Yandex cursor sits in different places with and without a route.** That is how Yandex itself behaves: with a route it moves the cursor away from the card. Try YANDEX55 (card at the top) or another zone variant.
-
-**The arrival time is partly covered by “P”.** That is the cluster's frame drawn over the video. Its position follows the zone's bottom-left corner.
-
-**CarPlay hangs on long drives.** Check **Show**: if the RAM disk is 90–100 % full, logs are on. Press **RAM logs: OFF** and reboot the head unit.
+**The Yandex cursor sits in different places with and without a route.** That is how Yandex itself behaves: with a route it moves the cursor away from the card.
 
 **How to roll back.** MQB Toolbox → CarPlay Maps VC → **Restore factory files** → `CPMAP_RESTORE_OK` → full reboot. Do not touch the `/mnt/app/carplaymaps` folder by hand: it holds the factory files for the rollback.
-
-**How to send logs for analysis.** Press **RAM logs: ON**, reboot, reproduce the problem and save the logs. Then switch back to **OFF**.
 
 </details>
 
 <details>
-<summary><b>🛠️ What changed vs omonob 1.2.2</b></summary>
+<summary><b>🛠️ What changed vs omonob 2.0.1</b></summary>
 
 <br>
 
-Details are in [skoda-mu1440-790/CHANGES.md](skoda-mu1440-790/CHANGES.md). In short:
+Details are in [CHANGES.md](skoda-mu1440-790/sd-overlay/Custom/carplay_maps_vc/CHANGES.md). In short:
 
-- **`core.so` (MU1440/790), binary patch:**
-  - safe area;
-  - frame rate;
-  - cluster URL with the `showETA` / `maneuverLayout` parameters.
+- **`core.so` (MU1440/790), data only:** the five zones, `maxFPS` 30, and `showETA=yes` in the Left and Right card URLs. Both variants are built reproducibly from the original with [`gen_core201.py`](skoda-mu1440-790/sd-overlay/Custom/carplay_maps_vc/tools/gen_core201.py); OMONOB 2.0.1 classic is byte-identical to the original.
+- **Installer:** adds the variant name to the version, installs the variant menu and removes buttons of older builds. The change is a diff in [`patches/`](skoda-mu1440-790/sd-overlay/Custom/carplay_maps_vc/patches).
+- **Variant menu** `cpmap-790-variants` in MQB Toolbox.
 
-  All variants are rebuilt reproducibly from the original with [`tools/build_790_variants.py`](skoda-mu1440-790/tools/build_790_variants.py). The OMONOB variant is byte-identical to the original.
-- **`libcardshim.so`** from [mathsls/MHI2-Carplay-Maps](https://github.com/mathsls/MHI2-Carplay-Maps) (GPL-3.0). Its source is in [`third_party/`](skoda-mu1440-790/third_party/mathsls-cardshim).
-- **`carplay-cluster-supervisor.nolog`**: the bridge log goes to `/dev/null` (mathsls's method). Script: [`tools/patch_supervisor.py`](skoda-mu1440-790/tools/patch_supervisor.py).
-- **Installer and `dio_manager` wrapper**: changes as diffs in [`patches/`](skoda-mu1440-790/patches).
-
-All other files in the archive are byte-identical to omonob's full v1.2.2 package. Version history is in [CHANGELOG.md](CHANGELOG.md).
+All other files in the archive are byte-identical to omonob's full v2.0.1 package. No code from other projects is added. Version history is in [CHANGELOG.md](CHANGELOG.md).
 
 </details>
 
@@ -234,22 +203,25 @@ All other files in the archive are byte-identical to omonob's full v1.2.2 packag
 
 ```text
 skoda-mu1440-790/          ← THIS BUILD
-├── sd-overlay/            files changed/added vs omonob 1.2.2 (as on the SD card)
-├── tools/                 scripts: build the core.so variants and the supervisor patch from omonob's originals
-├── patches/               installer and wrapper changes as diffs
-├── third_party/           libcardshim source (mathsls, GPL-3.0)
-├── docs/zones/            zone diagrams of the variants
-└── CHANGES.md             detailed list of changes
+├── sd-overlay/            files changed/added vs omonob 2.0.1, as on the SD card
+│   └── Custom/carplay_maps_vc/
+│       ├── payload/       installer and the default core.so (YANDEX-2026)
+│       ├── variants790/   core.so of each variant
+│       ├── menu790/       MQB Toolbox menu
+│       ├── tools/         gen_core201.py: builds the variants from omonob's core.so
+│       ├── patches/       installer change as a diff
+│       └── CHANGES.md     detailed list of changes
+└── docs/zones/            zone diagrams
 CHANGELOG.md               version history of this build
 README.md                  this file
 README.omonob.md           omonob's original README (unchanged)
 
-MU1102/ MU1367/ MU1440_SKODA/ src/ tests/ tools/ assets/ releases/
-                           ← omonob 1.2.2 sources and materials, UNCHANGED
+MU1102/ MU1367/ MU1440_SKODA/ src/ tests/ tools/ docs/ assets/ examples/ releases/
+                           ← omonob 2.0.1 sources and materials, UNCHANGED
 LICENSE                    GPL-3.0 (same as the original)
 ```
 
-The ready-made SD-card archive is not in the code; it is in [Releases](https://github.com/sli25555-spec/MHI2-Carplay-Maps-790/releases/latest).
+The ready-made SD-card archive is in [Releases](https://github.com/sli25555-spec/MHI2-Carplay-Maps-790/releases/latest).
 
 </details>
 
@@ -257,47 +229,40 @@ The ready-made SD-card archive is not in the code; it is in [Releases](https://g
 
 ## Русский
 
-**Что это.** Сборка [CarPlay Maps VC](https://github.com/omonob/MHI2-Carplay-Maps) автора **omonob** под **Škoda с магнитолой Columbus MHI2 (MU1440) и приборкой 790**. Карта из iPhone выводится на приборку, и на ней видно:
+**Что это.** [CarPlay Maps VC 2.0.1](https://github.com/omonob/MHI2-Carplay-Maps) автора **omonob** с небольшими правками данных под **Škoda с магнитолой Columbus MHI2 (MU1440) и приборкой 790**. Карта из iPhone выводится на приборку, и на ней видно:
 
 ### 🧭 Карточку манёвра — стрелка, метры, улица
-### 🕒 Время до цели
-
-Протестировано на Яндекс Навигаторе, Google Maps, Amap и Apple Картах.
+### 🕒 Время прибытия под карточкой
 
 | | |
 |---|---|
-| 🗺️ **Карточка манёвра и время прибытия** | рисует сам iPhone, прямо в карте на приборке |
-| 🎯 **Зоны под Яндекс, Google и Apple** | курсор выше и ближе к центру, карточка у края |
-| 🔀 **8 вариантов в меню** | переключаются из MQB Toolbox без переустановки |
-| 🧹 **RAM-логи выключены** | RAM-диск магнитолы (20 МБ) не переполняется при долгой езде |
+| 🕒 **Время прибытия** | при карточке Left и Right (в omonob 2.0.1 выключено) |
+| 🎯 **Зоны YANDEX-2026** | курсор, карточка и время прибытия расставлены под Яндекс Карты на приборке 790, подобраны в машине |
+| 🎞️ **30 кадров/с** | вместо 60 |
+| 🔀 **Меню вариантов** | YANDEX-2026 или omonob 2.0.1 без изменений, переключение из MQB Toolbox |
+| ✅ **Всё из omonob 2.0.1** | страница Virtual Cockpit settings, карточка Left / Right / Center / Off, Mirroring, логи и видеобуфер как в оригинале |
 | ↩️ **Полный откат** | Restore factory files возвращает заводские файлы |
 
 ### ⚡ Быстрая установка
 
-1. Скачайте `MHI2-Carplay-Maps-790-v1.zip` из [Releases](https://github.com/sli25555-spec/MHI2-Carplay-Maps-790/releases/latest) и распакуйте **в корень** SD-карты (FAT32).
-2. MQB Toolbox → mqbcoding → Customization → CarPlay Maps VC → **Install 790 AID 10.5**.
-3. Дождитесь `CPMAP_INSTALL_OK` и сделайте **полную перезагрузку** магнитолы (держать кнопку питания ~10 с).
+1. Скачайте `MHI2-Carplay-Maps-790-v2.zip` из [Releases](https://github.com/sli25555-spec/MHI2-Carplay-Maps-790/releases/latest) и распакуйте **в корень** SD-карты (FAT32).
+2. **Выньте кабель CarPlay.** Иначе установщик остановится (`DISCONNECT_CARPLAY_BEFORE_INSTALL`).
+3. MQB Toolbox → mqbcoding → Customization → CarPlay Maps VC → **Install AID 10.5** (если Toolbox ставился с omonob 1.2.x, кнопка называется **Install 790 AID 10.5**).
+4. Дождитесь `CPMAP_INSTALL_OK` и сделайте **полную перезагрузку** магнитолы (держать кнопку питания ~10 с).
+5. Настройки App-Connect → **Virtual Cockpit settings** → Navigation card → **Left** или **Right**.
 
-### ✅ После установки включён вариант YANDEX11 (под Яндекс Навигатор)
+### ✅ После установки включён вариант YANDEX-2026
 
-### 🔀 Если пользуетесь Google Maps, Apple Картами, Amap и т. д. — переключите вариант на GOOGLE11 или GOOGLE22
-
-**Все варианты отличаются между собой в основном положением стрелки курсора.**
-
-**MQB Toolbox → mqbcoding → Customization → CarPlay Maps VC → cpmap-790-variants → кнопка нужного варианта → дождаться `CPMAP_VARIANT_OK` → полная перезагрузка.**
-
-**Какой вариант что делает — в разделе [«Как переключать варианты: схемы зон»](#variants) ниже.**
+Ставится поверх v1 и поверх omonob 1.2.x / 2.0.x, Restore перед этим не нужен. Кнопки v1 из меню удаляются.
 
 > [!WARNING]
 > Изменение файлов магнитолы может привести к сбоям загрузки. Всё на свой риск: на стоящей машине, при стабильном питании, с бэкапом. Проверено только на конфигурации из раздела «Совместимость».
 
 <a id="variants"></a>
 <details>
-<summary><b>🔀 Как переключать варианты: схемы зон</b></summary>
+<summary><b>🔀 Варианты и зоны</b></summary>
 
 <br>
-
-### ❗ При установке ставится YANDEX11. Если пользуетесь Google Maps, Apple Картами, Amap и т. д. — выберите свой вариант ниже: GOOGLE11 или GOOGLE22!
 
 **Как переключить:**
 1. Вставьте SD-карту с этой сборкой в магнитолу. Она нужна для переключения.
@@ -305,40 +270,26 @@ The ready-made SD-card archive is not in the code; it is in [Releases](https://g
 3. Нажмите кнопку нужного варианта и дождитесь `CPMAP_VARIANT_OK`.
 4. Сделайте полную перезагрузку магнитолы (держать кнопку питания ~10 с).
 
-Кнопка **Show** в том же меню показывает, какой вариант сейчас стоит.
+**Show** в том же меню показывает вариант, сторону карточки и заполненность RAM-диска. Около 80 % при работающей карте — это нормально: столько занимает видеобуфер omonob (16 МБ).
 
-**Зона** — область видео приборки (1010×376), внутри которой навигатор ставит курсор, карточку и время прибытия. Карта при этом всегда на весь экран.
-- карточка висит от левого верхнего угла зоны;
-- время прибытия — от левого нижнего;
-- курсор ставится ближе к низу зоны.
+**Зона** — область видео приборки (1010×376), внутри которой навигатор ставит курсор, карточку и время прибытия. Карта при этом всегда на весь экран. omonob 2.0.1 сам выбирает одну из пяти зон: по стороне карточки в Virtual Cockpit settings и по тому, ведёт ли CarPlay по маршруту. Без маршрута у Left, Right и Off зона общая, у Center зона одна всегда.
 
-Тёмные области на схемах — рамки приборки (часы, «P», скорость, пробег). Положение карточки, курсора и рамок приблизительное, по фото.
-
-| Вариант | Зона X | Зона Y | Карточка | Время прибытия |
-|---|---|---|---|---|
-| **YANDEX11** (по умолчанию) — всё ± по центру | 30–808 | 41–333 | слева сверху | да |
-| **YANDEX22** — всё чуть сдвинуто вправо | 65–808 | 41–333 | слева сверху | да |
-| **YANDEX33** — стрелка по центру только когда маршрут не задан | 100–850 | 41–333 | слева сверху | да |
-| **YANDEX44** — стрелка точно по центру только при ведении по маршруту | 20–838 | 41–333 | слева сверху | да |
-| **YANDEX55** — подсказки сверху, стрелка всегда по центру | 100–810 | 41–333 | сверху полосой | нет |
-| **GOOGLE11** — всё ± по центру | 65–808 | 41–351 | слева сверху | да |
-| **GOOGLE22** — стрелка точно по центру только при ведении по маршруту | 45–795 | 41–351 | слева сверху | да |
-| **OMONOB 1.2.2 classic** — оригинал omonob, только карта | 202–808 | 16–360 | нет | нет |
+| Зона (X / Y) | **YANDEX-2026** (по умолчанию) | **OMONOB 2.0.1 classic** |
+|---|---|---|
+| Без маршрута | 214–820 / 55–339 | 202–808 / 16–360 |
+| Left с маршрутом | 0–692 / 55–339 | 18–624 / 75–359 |
+| Right с маршрутом | 346–999 / 55–339 | 386–992 / 75–359 |
+| Center | 325–685 / 30–349 | 325–685 / 75–359 |
+| Off с маршрутом | 42–648 / 16–360 | 42–648 / 16–360 |
+| Время прибытия | Left и Right | нет |
+| Кадров/с | 30 | 60 |
 
 <p>
-<img src="skoda-mu1440-790/docs/zones/YANDEX11.svg" width="49%" alt="YANDEX11">
-<img src="skoda-mu1440-790/docs/zones/YANDEX22.svg" width="49%" alt="YANDEX22">
-<img src="skoda-mu1440-790/docs/zones/YANDEX33.svg" width="49%" alt="YANDEX33">
-<img src="skoda-mu1440-790/docs/zones/YANDEX44.svg" width="49%" alt="YANDEX44">
-<img src="skoda-mu1440-790/docs/zones/YANDEX55.svg" width="49%" alt="YANDEX55">
-<img src="skoda-mu1440-790/docs/zones/GOOGLE11.svg" width="49%" alt="GOOGLE11">
-<img src="skoda-mu1440-790/docs/zones/GOOGLE22.svg" width="49%" alt="GOOGLE22">
-<img src="skoda-mu1440-790/docs/zones/OMONOB.svg" width="49%" alt="OMONOB">
+<img src="skoda-mu1440-790/docs/zones/YANDEX-2026.svg" width="100%" alt="Зоны YANDEX-2026">
+<img src="skoda-mu1440-790/docs/zones/OMONOB201.svg" width="100%" alt="Зоны OMONOB 2.0.1">
 </p>
 
-Ещё в меню:
-- **RAM logs: OFF / ON** — работает с любым вариантом. ON нужен только для диагностики;
-- **Show** — показывает вариант, состояние логов и заполненность RAM-диска в %.
+Положение карточки и курсора на схемах приблизительное: как их рисовать, решают iOS и навигатор.
 
 </details>
 
@@ -363,8 +314,9 @@ The ready-made SD-card archive is not in the code; it is in [Releases](https://g
 | Яндекс Навигатор / Карты | ✅ | ✅ | ✅ | ❌ (Яндекс не поддерживает) |
 | Google Maps | ✅ | ✅ | ✅ | ✅ |
 | Amap | ✅ | ✅ | ✅ | ✅ |
-| 2ГИС | ✅ | не проверялось | не проверялось | ❌ |
 | Apple Карты | ✅ | ✅ | ✅ | не проверялось |
+
+Зоны YANDEX-2026 подобраны в машине под Яндекс Карты. Google Maps, Amap и Apple Карты проверялись на сборке v1; с зонами YANDEX-2026 курсор у них может стоять чуть иначе.
 
 **Не проверялось:** другие машины и прошивки, приборка 791 (12,3"), беспроводные CarPlay-адаптеры. По опыту других проектов, картинка на приборку через них не идёт.
 
@@ -381,21 +333,19 @@ The ready-made SD-card archive is not in the code; it is in [Releases](https://g
 flowchart LR
     phone["📱 iPhone<br/>CarPlay"]
     subgraph unit["Магнитола Columbus MHI2 (MU1440)"]
-        core["core.so (omonob)<br/>второй экран для iPhone:<br/>зона, адрес, кадры/с"]
-        shim["libcardshim (mathsls)<br/>«это приборка»"]
+        core["core.so (omonob)<br/>второй экран для iPhone:<br/>зоны, адрес, кадры/с"]
         ring["видеобуфер<br/>RAM-диск 16 МБ"]
         bridge["altscreen-most-bridge<br/>видео в MOST"]
     end
     cluster["🖥️ Приборка 790<br/>окно карты"]
     phone -- "запрос: какие экраны?" --> core
-    shim -.->|"дополняет ответ"| core
-    core -- "1010×376, зона, showETA" --> phone
+    core -- "1010×376, зоны, showETA" --> phone
     phone -- "видео H.264:<br/>карта + карточка + ETA" --> core
     core --> ring --> bridge -- "MOST" --> cluster
 ```
 
-1. iPhone спрашивает магнитолу, какие у неё есть экраны. `core.so` отвечает: есть приборка 1010×376, вот её зона и адрес `maps:/car/instrumentcluster?showETA=yes`. Шим добавляет к ответу «это Instrument Cluster».
-2. iOS и навигатор рисуют для приборки отдельную карту. Курсор, карточку и время прибытия они ставят внутри зоны. Всё это iPhone присылает видеопотоком.
+1. iPhone спрашивает магнитолу, какие у неё есть экраны. `core.so` omonob отвечает: есть приборка 1010×376, вот её пять зон и адрес карточки. В этой сборке адреса для Left и Right просят время прибытия (`showETA=yes`).
+2. iOS и навигатор рисуют для приборки отдельную карту. Курсор, карточку и время прибытия они ставят внутри текущей зоны. Всё это iPhone присылает видеопотоком.
 3. Магнитола передаёт видео по шине MOST в приборку. Приборка показывает его в окне карты и рисует поверх свои рамки: часы, «P», скорость, пробег.
 
 Поэтому вариант меняет только то, **что магнитола сообщает iPhone**. Как именно рисовать, решают iOS и навигатор.
@@ -407,46 +357,37 @@ flowchart LR
 
 <br>
 
-**При установке `…CHECKSUM_MISMATCH…` / `…CLASSES_MISSING…`.** Скорее всего, на SD-карте остались файлы старой версии. Отформатируйте карту, распакуйте архив заново целиком и повторите Install 790.
+**`DISCONNECT_CARPLAY_BEFORE_INSTALL`.** Выньте кабель CarPlay и нажмите Install ещё раз.
+
+**При установке `…CHECKSUM_MISMATCH…` / `…CLASSES_MISSING…`.** Скорее всего, на SD-карте остались файлы старой версии. Удалите на карте папку `Custom/carplay_maps_vc`, распакуйте архив заново целиком и повторите Install.
 
 **`PROFILE_MISMATCH` / `UNSUPPORTED_JXE_SIZE`.** Прошивка магнитолы не та, под которую сделана сборка. Установщик ничего не менял.
 
 **Карты на приборке нет.**
 - Карта появляется только после загрузки штатной навигации, подождите 1–2 минуты после включения.
 - iPhone должен быть подключён **кабелем**.
+- В Virtual Cockpit settings должно быть включено VC Maps.
 
-**Нет карточки манёвра.** Проверьте, что маршрут построен и что выбран не OMONOB (у него карточки нет). Цвет и размер карточки выбирают iOS и навигатор.
+**Нет карточки или времени прибытия.** Проверьте, что маршрут построен. Время прибытия показывается только при карточке Left и Right и не показывается в OMONOB 2.0.1 classic.
 
-**Курсор Яндекса без маршрута и с маршрутом стоит в разных местах.** Так ведёт себя сам Яндекс: с маршрутом он отодвигает курсор от карточки. Попробуйте YANDEX55 (карточка сверху) или другой вариант зоны.
-
-**Время прибытия частично закрыто «P».** Это рамка приборки поверх видео. Его положение зависит от левого нижнего угла зоны.
-
-**CarPlay подвисает при долгой езде.** Проверьте **Show**: если RAM-диск заполнен на 90–100 %, включены логи. Нажмите **RAM logs: OFF** и перезагрузите магнитолу.
+**Курсор Яндекса без маршрута и с маршрутом стоит в разных местах.** Так ведёт себя сам Яндекс: с маршрутом он отодвигает курсор от карточки.
 
 **Как откатиться.** MQB Toolbox → CarPlay Maps VC → **Restore factory files** → `CPMAP_RESTORE_OK` → полная перезагрузка. Папку `/mnt/app/carplaymaps` руками не трогайте: в ней лежат заводские файлы для отката.
-
-**Как прислать логи для разбора.** Нажмите **RAM logs: ON**, перезагрузитесь, повторите проблему и сохраните логи. После этого верните **OFF**.
 
 </details>
 
 <details>
-<summary><b>🛠️ Что изменено относительно omonob 1.2.2</b></summary>
+<summary><b>🛠️ Что изменено относительно omonob 2.0.1</b></summary>
 
 <br>
 
-Подробно — в [skoda-mu1440-790/CHANGES.md](skoda-mu1440-790/CHANGES.md). Кратко:
+Подробно — в [CHANGES.md](skoda-mu1440-790/sd-overlay/Custom/carplay_maps_vc/CHANGES.md). Кратко:
 
-- **`core.so` (MU1440/790), правка бинарного файла:**
-  - безопасная зона;
-  - частота кадров;
-  - адрес экрана приборки с параметрами `showETA` / `maneuverLayout`.
+- **`core.so` (MU1440/790), только данные:** пять зон, `maxFPS` 30 и `showETA=yes` в адресах карточки Left и Right. Оба варианта воспроизводимо собираются из оригинала скриптом [`gen_core201.py`](skoda-mu1440-790/sd-overlay/Custom/carplay_maps_vc/tools/gen_core201.py); OMONOB 2.0.1 classic побайтно совпадает с оригиналом.
+- **Установщик:** дописывает вариант в версию, ставит меню вариантов и удаляет кнопки старых сборок. Изменение в виде diff — в [`patches/`](skoda-mu1440-790/sd-overlay/Custom/carplay_maps_vc/patches).
+- **Меню вариантов** `cpmap-790-variants` в MQB Toolbox.
 
-  Все варианты воспроизводимо собираются из оригинала: [`tools/build_790_variants.py`](skoda-mu1440-790/tools/build_790_variants.py). Вариант OMONOB побайтно совпадает с оригиналом.
-- **`libcardshim.so`** из [mathsls/MHI2-Carplay-Maps](https://github.com/mathsls/MHI2-Carplay-Maps) (GPL-3.0). Исходник лежит в [`third_party/`](skoda-mu1440-790/third_party/mathsls-cardshim).
-- **`carplay-cluster-supervisor.nolog`**: лог моста идёт в `/dev/null`, способ mathsls. Скрипт: [`tools/patch_supervisor.py`](skoda-mu1440-790/tools/patch_supervisor.py).
-- **Установщик и обёртка `dio_manager`**: изменения в виде diff в [`patches/`](skoda-mu1440-790/patches).
-
-Остальные файлы архива побайтно совпадают с полным архивом omonob v1.2.2. История версий — в [CHANGELOG.md](CHANGELOG.md).
+Остальные файлы архива побайтно совпадают с полным архивом omonob v2.0.1. Кода других проектов нет. История версий — в [CHANGELOG.md](CHANGELOG.md).
 
 </details>
 
@@ -457,22 +398,25 @@ flowchart LR
 
 ```text
 skoda-mu1440-790/          ← ЭТА СБОРКА
-├── sd-overlay/            файлы, изменённые и добавленные относительно omonob 1.2.2 (как на SD-карте)
-├── tools/                 скрипты: собрать варианты core.so и патч supervisor из оригиналов omonob
-├── patches/               изменения установщика и обёртки в виде diff
-├── third_party/           исходник libcardshim (mathsls, GPL-3.0)
-├── docs/zones/            схемы зон вариантов
-└── CHANGES.md             подробный список изменений
+├── sd-overlay/            файлы, изменённые и добавленные относительно omonob 2.0.1, как на SD-карте
+│   └── Custom/carplay_maps_vc/
+│       ├── payload/       установщик и core.so по умолчанию (YANDEX-2026)
+│       ├── variants790/   core.so каждого варианта
+│       ├── menu790/       меню MQB Toolbox
+│       ├── tools/         gen_core201.py: собирает варианты из core.so omonob
+│       ├── patches/       изменение установщика в виде diff
+│       └── CHANGES.md     подробный список изменений
+└── docs/zones/            схемы зон
 CHANGELOG.md               история версий этой сборки
 README.md                  этот файл
 README.omonob.md           оригинальный README omonob (без изменений)
 
-MU1102/ MU1367/ MU1440_SKODA/ src/ tests/ tools/ assets/ releases/
-                           ← исходники и материалы omonob 1.2.2, БЕЗ изменений
+MU1102/ MU1367/ MU1440_SKODA/ src/ tests/ tools/ docs/ assets/ examples/ releases/
+                           ← исходники и материалы omonob 2.0.1, БЕЗ изменений
 LICENSE                    GPL-3.0 (как у оригинала)
 ```
 
-Готовый архив для SD-карты лежит не в коде, а в [Releases](https://github.com/sli25555-spec/MHI2-Carplay-Maps-790/releases/latest).
+Готовый архив для SD-карты лежит в [Releases](https://github.com/sli25555-spec/MHI2-Carplay-Maps-790/releases/latest).
 
 </details>
 
@@ -480,8 +424,8 @@ LICENSE                    GPL-3.0 (как у оригинала)
 
 ## License / Лицензия
 
-[GNU GPL v3.0](LICENSE), same as the original project [omonob/MHI2-Carplay-Maps](https://github.com/omonob/MHI2-Carplay-Maps); omonob's original README is kept as [README.omonob.md](README.omonob.md). Third-party parts keep their own licenses: libcardshim (mathsls) — GPL-3.0, MQB Toolbox (jilleb) — MIT.
+[GNU GPL v3.0](LICENSE), same as the original project [omonob/MHI2-Carplay-Maps](https://github.com/omonob/MHI2-Carplay-Maps); omonob's original README is kept as [README.omonob.md](README.omonob.md). The MQB Toolbox (jilleb) in the archive keeps its MIT license.
 
-GNU GPL v3.0, как у оригинального проекта. Сторонние части сохраняют свои лицензии: libcardshim (mathsls) — GPL-3.0, MQB Toolbox (jilleb) — MIT.
+GNU GPL v3.0, как у оригинального проекта. MQB Toolbox (jilleb) в архиве сохраняет свою лицензию MIT.
 
 Škoda, Volkswagen, Apple, CarPlay, Yandex and Google are trademarks of their respective owners and are mentioned only to describe compatibility. / Товарные знаки принадлежат своим владельцам и упомянуты только для описания совместимости.

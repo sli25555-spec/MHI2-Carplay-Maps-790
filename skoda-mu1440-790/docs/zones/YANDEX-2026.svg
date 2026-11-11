@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="896" height="664" viewBox="0 0 896 664" style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+<rect width="896" height="664" rx="10" fill="#0d1117"/>
+<text x="16" y="26" font-size="15" font-weight="600" fill="#e6edf3">YANDEX-2026 — default · по умолчанию · card + ETA, 30 fps</text>
+<text x="16.0" y="54.0" font-size="12" fill="#8b949e">No route · без маршрута</text>
+<rect x="16.0" y="62.0" width="424.2" height="157.9" rx="6" fill="#1f3b2d"/>
+<rect x="105.9" y="85.1" width="254.5" height="119.3" fill="#58a6ff" fill-opacity="0.13" stroke="#58a6ff" stroke-width="2" stroke-dasharray="6 4"/>
+<polygon points="233.1,178.4 240.1,194.4 233.1,190.4 226.1,194.4" fill="#f2c94c"/>
+<text x="440.2" y="54.0" font-size="12" fill="#e6edf3" text-anchor="end" font-family="ui-monospace,Menlo,Consolas,monospace">X 214–820 · Y 55–339</text>
+<text x="456.2" y="54.0" font-size="12" fill="#8b949e">Left + route · Left с маршрутом</text>
+<rect x="456.2" y="62.0" width="424.2" height="157.9" rx="6" fill="#1f3b2d"/>
+<rect x="456.2" y="85.1" width="290.6" height="119.3" fill="#58a6ff" fill-opacity="0.13" stroke="#58a6ff" stroke-width="2" stroke-dasharray="6 4"/>
+<rect x="460.2" y="89.1" width="122.1" height="44" rx="8" fill="#1f6feb" fill-opacity="0.9"/>
+<rect x="460.2" y="184.4" width="70" height="16" rx="6" fill="#161b22" stroke="#8b949e" stroke-width="1"/><text x="495.2" y="195.9" font-size="9" fill="#e6edf3" text-anchor="middle">ETA</text>
+<polygon points="601.5,178.4 608.5,194.4 601.5,190.4 594.5,194.4" fill="#f2c94c"/>
+<text x="880.4" y="54.0" font-size="12" fill="#e6edf3" text-anchor="end" font-family="ui-monospace,Menlo,Consolas,monospace">X 0–692 · Y 55–339</text>
+<text x="16.0" y="261.9" font-size="12" fill="#8b949e">Right + route · Right с маршрутом</text>
+<rect x="16.0" y="269.9" width="424.2" height="157.9" rx="6" fill="#1f3b2d"/>
+<rect x="161.3" y="293.0" width="274.3" height="119.3" fill="#58a6ff" fill-opacity="0.13" stroke="#58a6ff" stroke-width="2" stroke-dasharray="6 4"/>
+<rect x="316.4" y="297.0" width="115.2" height="44" rx="8" fill="#1f6feb" fill-opacity="0.9"/>
+<rect x="165.3" y="392.3" width="70" height="16" rx="6" fill="#161b22" stroke="#8b949e" stroke-width="1"/><text x="200.3" y="403.8" font-size="9" fill="#e6edf3" text-anchor="middle">ETA</text>
+<polygon points="298.4,386.3 305.4,402.3 298.4,398.3 291.4,402.3" fill="#f2c94c"/>
+<text x="440.2" y="261.9" font-size="12" fill="#e6edf3" text-anchor="end" font-family="ui-monospace,Menlo,Consolas,monospace">X 346–999 · Y 55–339</text>
+<text x="456.2" y="261.9" font-size="12" fill="#8b949e">Center · всегда</text>
+<rect x="456.2" y="269.9" width="424.2" height="157.9" rx="6" fill="#1f3b2d"/>
+<rect x="592.7" y="282.5" width="151.2" height="134.0" fill="#58a6ff" fill-opacity="0.13" stroke="#58a6ff" stroke-width="2" stroke-dasharray="6 4"/>
+<rect x="596.7" y="286.5" width="143.2" height="26" rx="8" fill="#1f6feb" fill-opacity="0.9"/>
+<polygon points="668.3,390.5 675.3,406.5 668.3,402.5 661.3,406.5" fill="#f2c94c"/>
+<text x="880.4" y="261.9" font-size="12" fill="#e6edf3" text-anchor="end" font-family="ui-monospace,Menlo,Consolas,monospace">X 325–685 · Y 30–349</text>
+<text x="16.0" y="469.8" font-size="12" fill="#8b949e">Off + route · Off с маршрутом</text>
+<rect x="16.0" y="477.8" width="424.2" height="157.9" rx="6" fill="#1f3b2d"/>
+<rect x="33.6" y="484.6" width="254.5" height="144.5" fill="#58a6ff" fill-opacity="0.13" stroke="#58a6ff" stroke-width="2" stroke-dasharray="6 4"/>
+<polygon points="160.9,603.0 167.9,619.0 160.9,615.0 153.9,619.0" fill="#f2c94c"/>
+<text x="440.2" y="469.8" font-size="12" fill="#e6edf3" text-anchor="end" font-family="ui-monospace,Menlo,Consolas,monospace">X 42–648 · Y 16–360</text>
+<rect x="456.2" y="477.8" width="14" height="14" rx="3" fill="#58a6ff"/><text x="478.2" y="489.8" font-size="12" fill="#c9d1d9">zone · зона (1010×376 cluster video)</text>
+<rect x="456.2" y="501.8" width="14" height="14" rx="3" fill="#1f6feb"/><text x="478.2" y="513.8" font-size="12" fill="#c9d1d9">turn card · карточка (position approx.)</text>
+<rect x="456.2" y="525.8" width="14" height="14" rx="3" fill="#f2c94c"/><text x="478.2" y="537.8" font-size="12" fill="#c9d1d9">cursor · курсор (approx.)</text>
+<rect x="456.2" y="549.8" width="14" height="14" rx="3" fill="#8b949e"/><text x="478.2" y="561.8" font-size="12" fill="#c9d1d9">ETA · время прибытия (Left / Right only)</text>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="896" height="664" viewBox="0 0 896 664" style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+<rect width="896" height="664" rx="10" fill="#0d1117"/>
+<text x="16" y="26" font-size="15" font-weight="600" fill="#e6edf3">OMONOB 2.0.1 classic — original · оригинал · card, no ETA, 60 fps</text>
+<text x="16.0" y="54.0" font-size="12" fill="#8b949e">No route · без маршрута</text>
+<rect x="16.0" y="62.0" width="424.2" height="157.9" rx="6" fill="#1f3b2d"/>
+<rect x="100.8" y="68.7" width="254.5" height="144.5" fill="#58a6ff" fill-opacity="0.13" stroke="#58a6ff" stroke-width="2" stroke-dasharray="6 4"/>
+<polygon points="228.1,187.2 235.1,203.2 228.1,199.2 221.1,203.2" fill="#f2c94c"/>
+<text x="440.2" y="54.0" font-size="12" fill="#e6edf3" text-anchor="end" font-family="ui-monospace,Menlo,Consolas,monospace">X 202–808 · Y 16–360</text>
+<text x="456.2" y="54.0" font-size="12" fill="#8b949e">Left + route · Left с маршрутом</text>
+<rect x="456.2" y="62.0" width="424.2" height="157.9" rx="6" fill="#1f3b2d"/>
+<rect x="463.8" y="93.5" width="254.5" height="119.3" fill="#58a6ff" fill-opacity="0.13" stroke="#58a6ff" stroke-width="2" stroke-dasharray="6 4"/>
+<rect x="467.8" y="97.5" width="106.9" height="44" rx="8" fill="#1f6feb" fill-opacity="0.9"/>
+<polygon points="591.0,186.8 598.0,202.8 591.0,198.8 584.0,202.8" fill="#f2c94c"/>
+<text x="880.4" y="54.0" font-size="12" fill="#e6edf3" text-anchor="end" font-family="ui-monospace,Menlo,Consolas,monospace">X 18–624 · Y 75–359</text>
+<text x="16.0" y="261.9" font-size="12" fill="#8b949e">Right + route · Right с маршрутом</text>
+<rect x="16.0" y="269.9" width="424.2" height="157.9" rx="6" fill="#1f3b2d"/>
+<rect x="178.1" y="301.4" width="254.5" height="119.3" fill="#58a6ff" fill-opacity="0.13" stroke="#58a6ff" stroke-width="2" stroke-dasharray="6 4"/>
+<rect x="321.7" y="305.4" width="106.9" height="44" rx="8" fill="#1f6feb" fill-opacity="0.9"/>
+<polygon points="305.4,394.7 312.4,410.7 305.4,406.7 298.4,410.7" fill="#f2c94c"/>
+<text x="440.2" y="261.9" font-size="12" fill="#e6edf3" text-anchor="end" font-family="ui-monospace,Menlo,Consolas,monospace">X 386–992 · Y 75–359</text>
+<text x="456.2" y="261.9" font-size="12" fill="#8b949e">Center · всегда</text>
+<rect x="456.2" y="269.9" width="424.2" height="157.9" rx="6" fill="#1f3b2d"/>
+<rect x="592.7" y="301.4" width="151.2" height="119.3" fill="#58a6ff" fill-opacity="0.13" stroke="#58a6ff" stroke-width="2" stroke-dasharray="6 4"/>
+<rect x="596.7" y="305.4" width="143.2" height="26" rx="8" fill="#1f6feb" fill-opacity="0.9"/>
+<polygon points="668.3,394.7 675.3,410.7 668.3,406.7 661.3,410.7" fill="#f2c94c"/>
+<text x="880.4" y="261.9" font-size="12" fill="#e6edf3" text-anchor="end" font-family="ui-monospace,Menlo,Consolas,monospace">X 325–685 · Y 75–359</text>
+<text x="16.0" y="469.8" font-size="12" fill="#8b949e">Off + route · Off с маршрутом</text>
+<rect x="16.0" y="477.8" width="424.2" height="157.9" rx="6" fill="#1f3b2d"/>
+<rect x="33.6" y="484.6" width="254.5" height="144.5" fill="#58a6ff" fill-opacity="0.13" stroke="#58a6ff" stroke-width="2" stroke-dasharray="6 4"/>
+<polygon points="160.9,603.0 167.9,619.0 160.9,615.0 153.9,619.0" fill="#f2c94c"/>
+<text x="440.2" y="469.8" font-size="12" fill="#e6edf3" text-anchor="end" font-family="ui-monospace,Menlo,Consolas,monospace">X 42–648 · Y 16–360</text>
+<rect x="456.2" y="477.8" width="14" height="14" rx="3" fill="#58a6ff"/><text x="478.2" y="489.8" font-size="12" fill="#c9d1d9">zone · зона (1010×376 cluster video)</text>
+<rect x="456.2" y="501.8" width="14" height="14" rx="3" fill="#1f6feb"/><text x="478.2" y="513.8" font-size="12" fill="#c9d1d9">turn card · карточка (position approx.)</text>
+<rect x="456.2" y="525.8" width="14" height="14" rx="3" fill="#f2c94c"/><text x="478.2" y="537.8" font-size="12" fill="#c9d1d9">cursor · курсор (approx.)</text>
+</svg>
