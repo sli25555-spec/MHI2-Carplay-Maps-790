@@ -1,0 +1,52 @@
+--- a/Custom/carplay_maps_vc/payload/common/install-carplay-maps.sh	2026-10-28 02:43:12.000000000 +0300
++++ b/Custom/carplay_maps_vc/payload/common/install-carplay-maps.sh	2026-11-11 21:37:22.052869818 +0300
+@@ -67,7 +67,13 @@
+     fail "DISCONNECT_CARPLAY_BEFORE_INSTALL"
+ fi
+ 
+-CORE="$PAYLOAD/profiles/$EXPECTED_MU/$INSTRUMENT/core.so"
++PROFILE_DIR="$PAYLOAD/profiles/$EXPECTED_MU/$INSTRUMENT"
++CORE="$PROFILE_DIR/core.so"
++# MHI2-Carplay-Maps 790 v2: variant name of the default core.so (status screen).
++if [ -s "$PROFILE_DIR/VARIANT" ]; then
++    read CPMAP_VARIANT < "$PROFILE_DIR/VARIANT"
++    VERSION="$VERSION+$CPMAP_VARIANT"
++fi
+ WRAPPER="$PAYLOAD/common/dio_manager.wrapper.sh"
+ CONTROL_JAR="$PAYLOAD/common/CarPlayClusterControls.jar"
+ if [ -s "$PAYLOAD/profiles/$EXPECTED_MU/$INSTRUMENT/CarPlayClusterControls.jar" ]; then
+@@ -418,6 +424,34 @@
+ fi
+ rm -rf "$OLD" "$STAGE" 2>/dev/null
+ 
++# MHI2-Carplay-Maps 790 v2: install the MU1440/790 variant menu from the SD
++# card. Never fails the installation. Menu scripts of older builds (all versions) are
++# removed first so no stale buttons/scripts stay behind.
++MENU_SRC="$PAYLOAD/../menu790"
++ENGDEFS="$APP/eso/hmi/engdefs"
++if [ "$DETECTED_MU/$INSTRUMENT" = "MU1440/790" ] && [ -s "$MENU_SRC/cpmap-790-variants.esd" ] && [ -d "$ENGDEFS/scripts/mqb" ]; then
++    rm -f "$ENGDEFS/scripts/mqb/"cpmap_variant*.sh 2>/dev/null
++    if cp "$MENU_SRC/cpmap-790-variants.esd" "$ENGDEFS/cpmap-790-variants.esd" 2>/dev/null &&
++       cp "$MENU_SRC/"cpmap_variant*.sh "$ENGDEFS/scripts/mqb/" 2>/dev/null; then
++        chmod 755 "$ENGDEFS/scripts/mqb/"cpmap_variant*.sh 2>/dev/null
++        echo "CPMAP_VARIANT_MENU=INSTALLED"
++    else
++        echo "CPMAP_VARIANT_MENU=COPY_FAILED (main install is OK)"
++    fi
++    # A Toolbox installed with omonob 1.2.x has an older "Restore factory
++    # files" script that does not restore VCMenu.jar/VCMirrorRate.jar.
++    # Refresh it from the SD card (2.0.1 version) when it is there.
++    TB_RESTORE="$PAYLOAD/../../../Toolbox/scripts/cpmap_restore_core.sh"
++    if [ -s "$TB_RESTORE" ] && [ -s "$ENGDEFS/scripts/mqb/cpmap_restore_core.sh" ] &&
++       ! grep -q 'VCMenu.jar' "$ENGDEFS/scripts/mqb/cpmap_restore_core.sh" 2>/dev/null; then
++        if cp "$TB_RESTORE" "$ENGDEFS/scripts/mqb/cpmap_restore_core.sh.new" 2>/dev/null &&
++           mv "$ENGDEFS/scripts/mqb/cpmap_restore_core.sh.new" "$ENGDEFS/scripts/mqb/cpmap_restore_core.sh" 2>/dev/null; then
++            chmod 755 "$ENGDEFS/scripts/mqb/cpmap_restore_core.sh" 2>/dev/null
++            echo "CPMAP_TOOLBOX_RESTORE=UPDATED"
++        fi
++    fi
++fi
++
+ sync 2>/dev/null || true
+ echo "CPMAP_PROFILE=$DETECTED_MU/$INSTRUMENT"
+ echo "CPMAP_PLAINTEXT_ROOT=/mnt/app/carplaymaps"
