@@ -1,6 +1,6 @@
 <div align="center">
 
-# MHI2-Carplay-Maps 790
+# MHI2-Carplay-Maps 790v2
 
 **CarPlay map with turn card and arrival time on the Škoda virtual cockpit**<br>
 **CarPlay-карта с карточкой манёвра и временем прибытия на цифровой приборке Škoda**
